@@ -1,6 +1,6 @@
 name:                echobot
 version:             0.1.0.0
-github:              "githubuser/echobot"
+github:              "alexd1971/echobot"
 license:             BSD3
 author:              "Aleksey Danilevsky"
 maintainer:          "alexey.danilevsky@gmail.com"
@@ -21,6 +21,9 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- aeson
+- text
+- yaml
 
 library:
   source-dirs: src
