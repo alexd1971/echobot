@@ -26,6 +26,38 @@ source-repository head
 library
   exposed-modules:
       Config
+      Telegram.Types.Animation
+      Telegram.Types.Audio
+      Telegram.Types.Chat
+      Telegram.Types.Contact
+      Telegram.Types.Dice
+      Telegram.Types.Document
+      Telegram.Types.EncryptedCredentials
+      Telegram.Types.EncryptedPassportElement
+      Telegram.Types.Game
+      Telegram.Types.InlineKeyboardButton
+      Telegram.Types.InlineKeyboardMarkup
+      Telegram.Types.Invoice
+      Telegram.Types.Location
+      Telegram.Types.MaskPosition
+      Telegram.Types.Message
+      Telegram.Types.MessageAutoDeleteTimerChanged
+      Telegram.Types.MessageEntity
+      Telegram.Types.OrderInfo
+      Telegram.Types.PassportData
+      Telegram.Types.PassportFile
+      Telegram.Types.PhotoSize
+      Telegram.Types.Poll
+      Telegram.Types.PollOption
+      Telegram.Types.ProximityAlertTriggered
+      Telegram.Types.ShippingAddress
+      Telegram.Types.Sticker
+      Telegram.Types.SuccessfulPayment
+      Telegram.Types.User
+      Telegram.Types.Venue
+      Telegram.Types.Video
+      Telegram.Types.VideoNote
+      Telegram.Types.Voice
   other-modules:
       Paths_echobot
   hs-source-dirs:
