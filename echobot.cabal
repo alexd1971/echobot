@@ -28,7 +28,9 @@ library
       Config
       Telegram.Types.Animation
       Telegram.Types.Audio
-      Telegram.Types.Chat
+      Telegram.Types.ChatLocation
+      Telegram.Types.ChatMessage
+      Telegram.Types.ChatPermissions
       Telegram.Types.Contact
       Telegram.Types.Dice
       Telegram.Types.Document
@@ -39,8 +41,8 @@ library
       Telegram.Types.InlineKeyboardMarkup
       Telegram.Types.Invoice
       Telegram.Types.Location
+      Telegram.Types.LoginUrl
       Telegram.Types.MaskPosition
-      Telegram.Types.Message
       Telegram.Types.MessageAutoDeleteTimerChanged
       Telegram.Types.MessageEntity
       Telegram.Types.OrderInfo

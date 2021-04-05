@@ -1,10 +1,21 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE TemplateHaskell #-}
 
-module Telegram.Types.Message where
+module Telegram.Types.ChatMessage where
 
+import Data.Aeson
+  ( FromJSON (parseJSON),
+    Options (fieldLabelModifier, omitNothingFields),
+    ToJSON (toJSON),
+    camelTo2,
+    defaultOptions,
+  )
+import Data.Aeson.TH (deriveJSON)
+import Data.Aeson.Types (emptyObject)
 import Telegram.Types.Animation (Animation)
 import Telegram.Types.Audio (Audio)
-import {-# SOURCE #-} Telegram.Types.Chat (Chat)
+import Telegram.Types.ChatLocation (ChatLocation)
+import Telegram.Types.ChatPermissions (ChatPermissions)
 import Telegram.Types.Contact (Contact)
 import Telegram.Types.Dice (Dice)
 import Telegram.Types.Document (Document)
@@ -26,6 +37,60 @@ import Telegram.Types.Venue (Venue)
 import Telegram.Types.Video (Video)
 import Telegram.Types.VideoNote (VideoNote)
 import Telegram.Types.Voice (Voice)
+
+data VoiceChatStarted = VoiceChatStarted deriving (Show)
+
+instance FromJSON VoiceChatStarted where
+  parseJSON _ = do return VoiceChatStarted
+
+instance ToJSON VoiceChatStarted where
+  toJSON _ = emptyObject
+
+newtype VoiceChatEnded = VoiceChatEnded {duration :: Integer} deriving (Show)
+
+$(deriveJSON defaultOptions ''VoiceChatEnded)
+
+newtype VoiceChatParticipantsInvited = VoiceChatParticipantsInvited {users :: Maybe [User]} deriving (Show)
+
+$(deriveJSON defaultOptions ''VoiceChatParticipantsInvited)
+
+data ChatPhoto = ChatPhoto
+  { smallFileId :: String,
+    smallFileUniqueId :: String,
+    bigFileId :: String,
+    bigFileUniqueId :: String
+  }
+  deriving (Show)
+
+$( deriveJSON
+     defaultOptions
+       { fieldLabelModifier = camelTo2 '_',
+         omitNothingFields = True
+       }
+     ''ChatPhoto
+ )
+
+data Chat = Chat
+  { chatId :: Integer,
+    chatType :: String,
+    title :: Maybe String,
+    username :: Maybe String,
+    firstName :: Maybe String,
+    lastName :: Maybe String,
+    chatPhoto :: Maybe ChatPhoto,
+    bio :: Maybe String,
+    description :: Maybe String,
+    inviteLink :: Maybe String,
+    chatPinnedMessage :: Maybe Message,
+    permissions :: Maybe ChatPermissions,
+    showModeDelay :: Maybe Integer,
+    messageAutoDeleteTime :: Maybe Integer,
+    stickerSetName :: Maybe String,
+    canSetStickerSet :: Maybe Bool,
+    linkedChatId :: Maybe Integer,
+    chatLocation :: Maybe ChatLocation
+  }
+  deriving (Show)
 
 data Message = Message
   { messageId :: Integer,
@@ -49,7 +114,7 @@ data Message = Message
     animation :: Maybe Animation,
     audio :: Maybe Audio,
     document :: Maybe Document,
-    photo :: Maybe [PhotoSize],
+    messagePhoto :: Maybe [PhotoSize],
     sticker :: Maybe Sticker,
     video :: Maybe Video,
     videoNote :: Maybe VideoNote,
@@ -61,7 +126,7 @@ data Message = Message
     game :: Maybe Game,
     poll :: Maybe Poll,
     venue :: Maybe Venue,
-    location :: Maybe Location,
+    messageLocation :: Maybe Location,
     newChatMembers :: Maybe [User],
     leftChatMember :: Maybe User,
     newChatTitle :: Maybe String,
@@ -73,7 +138,7 @@ data Message = Message
     messageAutoDeleteTimerChanged :: Maybe MessageAutoDeleteTimerChanged,
     migrateToChatId :: Maybe Integer,
     migrateFromChatId :: Maybe Integer,
-    pinnedMessage :: Maybe Message,
+    messagePinnedMessage :: Maybe Message,
     invoice :: Maybe Invoice,
     successfulPayment :: Maybe SuccessfulPayment,
     connectedWebsite :: Maybe String,
@@ -84,12 +149,25 @@ data Message = Message
     voiceChatParticipantsInvited :: Maybe VoiceChatParticipantsInvited,
     replyMarkup :: Maybe InlineKeyboardMarkup
   }
+  deriving (Show)
 
-data VoiceChatStarted
+$( deriveJSON
+     defaultOptions
+       { fieldLabelModifier = camelTo2 '_',
+         omitNothingFields = True
+       }
+     ''Chat
+ )
 
-newtype VoiceChatEnded = VoiceChatEnded {duration :: Integer}
-
-newtype VoiceChatParticipantsInvited = VoiceChatParticipantsInvited {users :: Maybe [User]}
+$( deriveJSON
+     defaultOptions
+       { fieldLabelModifier = \case
+           "messageId" -> "id"
+           a -> camelTo2 '_' a,
+         omitNothingFields = True
+       }
+     ''Message
+ )
 
 defaultMessage :: Message
 defaultMessage =

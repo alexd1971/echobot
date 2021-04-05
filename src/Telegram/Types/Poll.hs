@@ -1,5 +1,14 @@
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE TemplateHaskell #-}
+
 module Telegram.Types.Poll where
 
+import Data.Aeson.TH
+  ( Options (fieldLabelModifier, omitNothingFields),
+    defaultOptions,
+    deriveJSON,
+  )
+import Data.Aeson.Types (camelTo2)
 import Telegram.Types.MessageEntity
 import Telegram.Types.PollOption
 
@@ -18,3 +27,14 @@ data Poll = Poll
     openPeriod :: Maybe Integer,
     closeDate :: Maybe Integer
   }
+  deriving (Show)
+
+$( deriveJSON
+     defaultOptions
+       { fieldLabelModifier = \case
+           "pollId" -> "id"
+           a -> camelTo2 '_' a,
+         omitNothingFields = True
+       }
+     ''Poll
+ )

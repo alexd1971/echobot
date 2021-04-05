@@ -1,5 +1,13 @@
+{-# LANGUAGE TemplateHaskell #-}
+
 module Telegram.Types.Video where
 
+import Data.Aeson.TH
+  ( Options (fieldLabelModifier, omitNothingFields),
+    defaultOptions,
+    deriveJSON,
+  )
+import Data.Aeson.Types (camelTo2)
 import Telegram.Types.PhotoSize (PhotoSize)
 
 data Video = Video
@@ -13,3 +21,12 @@ data Video = Video
     mimeType :: Maybe String,
     fileSize :: Maybe Integer
   }
+  deriving (Show)
+
+$( deriveJSON
+     defaultOptions
+       { fieldLabelModifier = camelTo2 '_',
+         omitNothingFields = True
+       }
+     ''Video
+ )

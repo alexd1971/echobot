@@ -1,8 +1,14 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.User where
 
-import Data.Aeson (FromJSON (parseJSON), withObject, (.:), (.:?))
+import Data.Aeson.TH
+  ( Options (fieldLabelModifier, omitNothingFields),
+    defaultOptions,
+    deriveJSON,
+  )
+import Data.Aeson.Types (camelTo2)
 
 data User = User
   { userId :: Integer,
@@ -15,16 +21,14 @@ data User = User
     canReadAllGroupMessages :: Maybe Bool,
     supportsInlineQueries :: Maybe Bool
   }
+  deriving (Show)
 
-instance FromJSON User where
-  parseJSON = withObject "User" $ \v ->
-    User
-      <$> v .: "id"
-      <*> v .: "is_bot"
-      <*> v .: "first_name"
-      <*> v .:? "last_name"
-      <*> v .:? "username"
-      <*> v .:? "language_code"
-      <*> v .:? "can_join_groups"
-      <*> v .:? "can_read_all_group_messages"
-      <*> v .:? "supports_inline_queries"
+$( deriveJSON
+     defaultOptions
+       { fieldLabelModifier = \case
+           "userId" -> "id"
+           a -> camelTo2 '_' a,
+         omitNothingFields = True
+       }
+     ''User
+ )
