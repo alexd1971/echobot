@@ -1,3 +1,4 @@
+{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TemplateHaskell #-}
 
@@ -77,18 +78,18 @@ data Chat = Chat
     username :: Maybe String,
     firstName :: Maybe String,
     lastName :: Maybe String,
-    chatPhoto :: Maybe ChatPhoto,
+    photo :: Maybe ChatPhoto,
     bio :: Maybe String,
     description :: Maybe String,
     inviteLink :: Maybe String,
-    chatPinnedMessage :: Maybe Message,
+    pinnedMessage :: Maybe Message,
     permissions :: Maybe ChatPermissions,
     showModeDelay :: Maybe Integer,
     messageAutoDeleteTime :: Maybe Integer,
     stickerSetName :: Maybe String,
     canSetStickerSet :: Maybe Bool,
     linkedChatId :: Maybe Integer,
-    chatLocation :: Maybe ChatLocation
+    location :: Maybe ChatLocation
   }
   deriving (Show)
 
@@ -103,7 +104,7 @@ data Message = Message
     forwardFromMessageId :: Maybe Integer,
     forwardSignature :: Maybe String,
     forwardSenderName :: Maybe String,
-    forwardDate :: Integer,
+    forwardDate :: Maybe Integer,
     replyToMessage :: Maybe Message,
     viaBot :: Maybe User,
     editDate :: Maybe Integer,
@@ -114,7 +115,7 @@ data Message = Message
     animation :: Maybe Animation,
     audio :: Maybe Audio,
     document :: Maybe Document,
-    messagePhoto :: Maybe [PhotoSize],
+    photo :: Maybe [PhotoSize],
     sticker :: Maybe Sticker,
     video :: Maybe Video,
     videoNote :: Maybe VideoNote,
@@ -126,7 +127,7 @@ data Message = Message
     game :: Maybe Game,
     poll :: Maybe Poll,
     venue :: Maybe Venue,
-    messageLocation :: Maybe Location,
+    location :: Maybe Location,
     newChatMembers :: Maybe [User],
     leftChatMember :: Maybe User,
     newChatTitle :: Maybe String,
@@ -138,7 +139,7 @@ data Message = Message
     messageAutoDeleteTimerChanged :: Maybe MessageAutoDeleteTimerChanged,
     migrateToChatId :: Maybe Integer,
     migrateFromChatId :: Maybe Integer,
-    messagePinnedMessage :: Maybe Message,
+    pinnedMessage :: Maybe Message,
     invoice :: Maybe Invoice,
     successfulPayment :: Maybe SuccessfulPayment,
     connectedWebsite :: Maybe String,
@@ -153,7 +154,10 @@ data Message = Message
 
 $( deriveJSON
      defaultOptions
-       { fieldLabelModifier = camelTo2 '_',
+       { fieldLabelModifier = \case
+           "chatId" -> "id"
+           "chatType" -> "type"
+           a -> camelTo2 '_' a,
          omitNothingFields = True
        }
      ''Chat
@@ -161,13 +165,33 @@ $( deriveJSON
 
 $( deriveJSON
      defaultOptions
-       { fieldLabelModifier = \case
-           "messageId" -> "id"
-           a -> camelTo2 '_' a,
+       { fieldLabelModifier = camelTo2 '_',
          omitNothingFields = True
        }
      ''Message
  )
+
+defaultChat :: Chat
+defaultChat =
+  Chat
+    undefined
+    undefined
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    Nothing
 
 defaultMessage :: Message
 defaultMessage =
@@ -182,7 +206,7 @@ defaultMessage =
     Nothing
     Nothing
     Nothing
-    undefined
+    Nothing
     Nothing
     Nothing
     Nothing
