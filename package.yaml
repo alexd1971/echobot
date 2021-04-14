@@ -22,6 +22,10 @@ description:         Please see the README on GitHub at <https://github.com/gith
 dependencies:
 - base >= 4.7 && < 5
 - aeson
+- generic-random
+- unordered-containers
+- hspec
+- QuickCheck
 - text
 - yaml
 
@@ -40,9 +44,9 @@ executables:
     - echobot
 
 tests:
-  echobot-test:
-    main:                Spec.hs
-    source-dirs:         test
+  types-test:
+    main:                TypesTest.hs
+    source-dirs:         test/types
     ghc-options:
     - -threaded
     - -rtsopts

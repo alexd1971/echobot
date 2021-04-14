@@ -49,11 +49,11 @@ instance ToJSON VoiceChatStarted where
 
 newtype VoiceChatEnded = VoiceChatEnded {duration :: Integer} deriving (Show)
 
-$(deriveJSON defaultOptions ''VoiceChatEnded)
+deriveJSON defaultOptions ''VoiceChatEnded
 
 newtype VoiceChatParticipantsInvited = VoiceChatParticipantsInvited {users :: Maybe [User]} deriving (Show)
 
-$(deriveJSON defaultOptions ''VoiceChatParticipantsInvited)
+deriveJSON defaultOptions ''VoiceChatParticipantsInvited
 
 data ChatPhoto = ChatPhoto
   { smallFileId :: String,
@@ -63,13 +63,12 @@ data ChatPhoto = ChatPhoto
   }
   deriving (Show)
 
-$( deriveJSON
-     defaultOptions
-       { fieldLabelModifier = camelTo2 '_',
-         omitNothingFields = True
-       }
-     ''ChatPhoto
- )
+deriveJSON
+  defaultOptions
+    { fieldLabelModifier = camelTo2 '_',
+      omitNothingFields = True
+    }
+  ''ChatPhoto
 
 data Chat = Chat
   { chatId :: Integer,
@@ -152,24 +151,22 @@ data Message = Message
   }
   deriving (Show)
 
-$( deriveJSON
-     defaultOptions
-       { fieldLabelModifier = \case
-           "chatId" -> "id"
-           "chatType" -> "type"
-           a -> camelTo2 '_' a,
-         omitNothingFields = True
-       }
-     ''Chat
- )
+deriveJSON
+  defaultOptions
+    { fieldLabelModifier = \case
+        "chatId" -> "id"
+        "chatType" -> "type"
+        a -> camelTo2 '_' a,
+      omitNothingFields = True
+    }
+  ''Chat
 
-$( deriveJSON
-     defaultOptions
-       { fieldLabelModifier = camelTo2 '_',
-         omitNothingFields = True
-       }
-     ''Message
- )
+deriveJSON
+  defaultOptions
+    { fieldLabelModifier = camelTo2 '_',
+      omitNothingFields = True
+    }
+  ''Message
 
 defaultChat :: Chat
 defaultChat =
