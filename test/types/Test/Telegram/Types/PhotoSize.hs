@@ -21,7 +21,14 @@ instance Arbitrary PhotoSize where
 
 instance JSONTestable PhotoSize
 
-photoSizeKeys = sort ["file_id", "height", "width", "file_unique_id", "file_size"]
+photoSizeKeys =
+  sort
+    [ "file_id",
+      "height",
+      "width",
+      "file_unique_id",
+      "file_size"
+    ]
 
 photoSizeWithAllKeys :: IO PhotoSize
 photoSizeWithAllKeys =
@@ -34,5 +41,5 @@ testPhotoSize = do
   describe "Test PhotoSize JSON encode/decode" $
     modifyMaxSuccess (const 5) $ do
       prop "encode/decode" (propJSON :: JSONProperty PhotoSize)
-      photoSize <- runIO photoSizeWithAllKeys
-      it "correct key names encoding" $ objectKeys (toJSON photoSize) `shouldBe` Just photoSizeKeys
+      object <- runIO photoSizeWithAllKeys
+      it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just photoSizeKeys

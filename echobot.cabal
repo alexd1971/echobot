@@ -98,7 +98,9 @@ test-suite types-test
   type: exitcode-stdio-1.0
   main-is: TypesTest.hs
   other-modules:
+      Test.Telegram.Types.Animation
       Test.Telegram.Types.General
+      Test.Telegram.Types.PhotoSize
       Paths_echobot
   hs-source-dirs:
       test/types

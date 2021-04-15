@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module Telegram.Types.Animation where
 
@@ -9,6 +10,7 @@ import Data.Aeson.TH
   )
 import Data.Aeson.Types (camelTo2)
 import Telegram.Types.PhotoSize (PhotoSize)
+import GHC.Generics
 
 data Animation = Animation
   { fileId :: String,
@@ -21,7 +23,7 @@ data Animation = Animation
     mimeType :: Maybe String,
     fileSize :: Maybe Integer
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
