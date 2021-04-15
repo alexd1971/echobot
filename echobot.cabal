@@ -99,6 +99,7 @@ test-suite types-test
   main-is: TypesTest.hs
   other-modules:
       Test.Telegram.Types.Animation
+      Test.Telegram.Types.Audio
       Test.Telegram.Types.General
       Test.Telegram.Types.PhotoSize
       Paths_echobot

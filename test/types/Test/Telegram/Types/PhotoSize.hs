@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Test.Telegram.Types.PhotoSize where
+module Test.Telegram.Types.PhotoSize (testPhotoSize) where
 
 import Data.Aeson (ToJSON (toJSON))
 import Data.List (sort)
@@ -21,7 +21,7 @@ instance Arbitrary PhotoSize where
 
 instance JSONTestable PhotoSize
 
-photoSizeKeys =
+allKeys =
   sort
     [ "file_id",
       "height",
@@ -30,16 +30,15 @@ photoSizeKeys =
       "file_size"
     ]
 
-photoSizeWithAllKeys :: IO PhotoSize
-photoSizeWithAllKeys =
-  generate $
-    genericArbitraryUG
-      (genAlwaysJust :: Gen (Maybe Integer))
+generators :: Gen (Maybe Integer)
+generators = genAlwaysJust
+
+objectWithAllKeys :: IO PhotoSize
+objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testPhotoSize :: Spec
 testPhotoSize = do
-  describe "Test PhotoSize JSON encode/decode" $
-    modifyMaxSuccess (const 5) $ do
-      prop "encode/decode" (propJSON :: JSONProperty PhotoSize)
-      object <- runIO photoSizeWithAllKeys
-      it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just photoSizeKeys
+  describe "Test PhotoSize JSON" $ do
+    prop "encode/decode" (propJSON :: JSONProperty PhotoSize)
+    object <- runIO objectWithAllKeys
+    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys

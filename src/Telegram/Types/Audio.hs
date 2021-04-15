@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.Audio where
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics
 import Telegram.Types.PhotoSize (PhotoSize)
 
 data Audio = Audio
@@ -21,7 +23,7 @@ data Audio = Audio
     fileSize :: Maybe Integer,
     thumb :: Maybe PhotoSize
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
