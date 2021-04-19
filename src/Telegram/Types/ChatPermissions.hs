@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.ChatPermissions where
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics (Generic)
 
 data ChatPermissions = ChatPermissions
   { canSendMessages :: Maybe Bool,
@@ -19,7 +21,7 @@ data ChatPermissions = ChatPermissions
     canInviteUsers :: Maybe Bool,
     canPinMessages :: Maybe Bool
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions

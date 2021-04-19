@@ -7,6 +7,8 @@ import Test.Hspec.QuickCheck (modifyMaxSuccess)
 import Test.Telegram.Types.Animation (testAnimation)
 import Test.Telegram.Types.Audio (testAudio)
 import Test.Telegram.Types.ChatLocation (testChatLocation)
+import Test.Telegram.Types.ChatPermissions (testChatPermissions)
+import Test.Telegram.Types.Contact (testContact)
 import Test.Telegram.Types.Location (testLocation)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
 
@@ -18,3 +20,5 @@ main = hspec $ do
     testAudio
     testLocation
     testChatLocation
+    testChatPermissions
+    testContact
