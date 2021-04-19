@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.ChatLocation where
@@ -7,13 +8,14 @@ import Data.Aeson.TH
     defaultOptions,
     deriveJSON,
   )
-import Telegram.Types.Location
+import GHC.Generics (Generic)
+import Telegram.Types.Location (Location)
 
 data ChatLocation = ChatLocation
   { location :: Location,
     address :: String
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions

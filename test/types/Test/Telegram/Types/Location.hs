@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeOperators #-}
 
-module Test.Telegram.Types.Audio (testAudio) where
+module Test.Telegram.Types.Location (testLocation) where
 
 import Data.Aeson (ToJSON (toJSON))
 import Data.List (sort)
@@ -10,8 +10,7 @@ import Generic.Random
     genericArbitraryUG,
     type (:+) (..),
   )
-import Telegram.Types.Audio
-import Telegram.Types.PhotoSize
+import Telegram.Types.Location
 import Test.Hspec (Spec, describe, it, runIO, shouldBe)
 import Test.Hspec.QuickCheck (modifyMaxSuccess, prop)
 import Test.QuickCheck (Arbitrary (arbitrary), Gen, generate)
@@ -21,41 +20,35 @@ import Test.Telegram.Types.General
     genAlwaysJust,
     objectKeys,
   )
-import Test.Telegram.Types.PhotoSize
 
-instance Arbitrary Audio where
+instance Arbitrary Location where
   arbitrary = genericArbitraryU
 
-instance JSONTestable Audio
+instance JSONTestable Location
 
 allKeys =
   sort
-    [ "file_id",
-      "file_unique_id",
-      "duration",
-      "performer",
-      "title",
-      "file_name",
-      "mime_type",
-      "file_size",
-      "thumb"
+    [ "longitude",
+      "latitude",
+      "horizontal_accuracy",
+      "live_period",
+      "heading",
+      "proximity_alert_radius"
     ]
 
 generators ::
   Gen (Maybe Integer)
-    :+ Gen (Maybe String)
-    :+ Gen (Maybe PhotoSize)
+    :+ Gen (Maybe Float)
 generators =
   genAlwaysJust
     :+ genAlwaysJust
-    :+ genAlwaysJust
 
-objectWithAllKeys :: IO Audio
+objectWithAllKeys :: IO Location
 objectWithAllKeys = generate $ genericArbitraryUG generators
 
-testAudio :: Spec
-testAudio = do
-  describe "Test Audio JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty Audio)
+testLocation :: Spec
+testLocation = do
+  describe "Test Location JSON" $ do
+    prop "encode/decode" (propJSON :: JSONProperty Location)
     object <- runIO objectWithAllKeys
     it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys

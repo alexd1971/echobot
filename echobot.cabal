@@ -100,7 +100,9 @@ test-suite types-test
   other-modules:
       Test.Telegram.Types.Animation
       Test.Telegram.Types.Audio
+      Test.Telegram.Types.ChatLocation
       Test.Telegram.Types.General
+      Test.Telegram.Types.Location
       Test.Telegram.Types.PhotoSize
       Paths_echobot
   hs-source-dirs:

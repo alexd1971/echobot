@@ -41,8 +41,14 @@ allKeys =
       "file_size"
     ]
 
-generators :: Gen (Maybe Integer) :+ Gen (Maybe String) :+ Gen (Maybe PhotoSize)
-generators = genAlwaysJust :+ genAlwaysJust :+ genAlwaysJust
+generators ::
+  Gen (Maybe Integer)
+    :+ Gen (Maybe String)
+    :+ Gen (Maybe PhotoSize)
+generators =
+  genAlwaysJust
+    :+ genAlwaysJust
+    :+ genAlwaysJust
 
 objectWithAllKeys :: IO Animation
 objectWithAllKeys = generate $ genericArbitraryUG generators

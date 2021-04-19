@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.Location where
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics
 
 data Location = Location
   { longitude :: Float,
@@ -16,7 +18,8 @@ data Location = Location
     livePeriod :: Maybe Integer,
     heading :: Maybe Integer,
     proximityAlertRadius :: Maybe Integer
-  } deriving (Show)
+  }
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
