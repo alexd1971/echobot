@@ -13,6 +13,7 @@ import Test.Telegram.Types.Dice (testDice)
 import Test.Telegram.Types.Document (testDocument)
 import Test.Telegram.Types.EncryptedCredentials (testEncryptedCredentials)
 import Test.Telegram.Types.EncryptedPassportElement (testEncryptedPassportElement)
+import Test.Telegram.Types.Game (testGame)
 import Test.Telegram.Types.Location (testLocation)
 import Test.Telegram.Types.MessageEntity (testMessageEntity)
 import Test.Telegram.Types.PassportFile (testPassportFile)
@@ -36,3 +37,4 @@ main = hspec $ do
     testEncryptedPassportElement
     testUser
     testMessageEntity
+    testGame

@@ -107,6 +107,7 @@ test-suite types-test
       Test.Telegram.Types.Document
       Test.Telegram.Types.EncryptedCredentials
       Test.Telegram.Types.EncryptedPassportElement
+      Test.Telegram.Types.Game
       Test.Telegram.Types.General
       Test.Telegram.Types.Location
       Test.Telegram.Types.MessageEntity

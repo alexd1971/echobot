@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.Game where
@@ -8,9 +9,10 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
-import Telegram.Types.Animation
-import Telegram.Types.MessageEntity
-import Telegram.Types.PhotoSize
+import GHC.Generics (Generic)
+import Telegram.Types.Animation (Animation)
+import Telegram.Types.MessageEntity (MessageEntity)
+import Telegram.Types.PhotoSize (PhotoSize)
 
 data Game = Game
   { title :: String,
@@ -20,7 +22,7 @@ data Game = Game
     textEntities :: Maybe [MessageEntity],
     animation :: Maybe Animation
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
