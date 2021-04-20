@@ -12,7 +12,9 @@ import Test.Telegram.Types.Contact (testContact)
 import Test.Telegram.Types.Dice (testDice)
 import Test.Telegram.Types.Document (testDocument)
 import Test.Telegram.Types.EncryptedCredentials (testEncryptedCredentials)
+import Test.Telegram.Types.EncryptedPassportElement (testEncryptedPassportElement)
 import Test.Telegram.Types.Location (testLocation)
+import Test.Telegram.Types.PassportFile (testPassportFile)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
 
 main :: IO ()
@@ -28,3 +30,6 @@ main = hspec $ do
     testDice
     testDocument
     testEncryptedCredentials
+    testPassportFile
+    testEncryptedPassportElement
+

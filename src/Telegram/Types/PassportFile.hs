@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.PassportFile where
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics (Generic)
 
 data PassportFile = PassportFile
   { fileId :: String,
@@ -15,7 +17,7 @@ data PassportFile = PassportFile
     fileSize :: Integer,
     fileDate :: Integer
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions

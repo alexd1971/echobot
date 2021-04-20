@@ -106,8 +106,10 @@ test-suite types-test
       Test.Telegram.Types.Dice
       Test.Telegram.Types.Document
       Test.Telegram.Types.EncryptedCredentials
+      Test.Telegram.Types.EncryptedPassportElement
       Test.Telegram.Types.General
       Test.Telegram.Types.Location
+      Test.Telegram.Types.PassportFile
       Test.Telegram.Types.PhotoSize
       Paths_echobot
   hs-source-dirs:

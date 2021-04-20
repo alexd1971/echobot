@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TemplateHaskell #-}
 
@@ -9,6 +10,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics (Generic)
 import Telegram.Types.PassportFile (PassportFile)
 
 data EncryptedPassportElement = EncryptedPassportElement
@@ -23,7 +25,7 @@ data EncryptedPassportElement = EncryptedPassportElement
     translation :: Maybe [PassportFile],
     hash :: String
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
