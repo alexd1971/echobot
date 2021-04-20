@@ -1,13 +1,15 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.Dice where
 
 import Data.Aeson.TH (defaultOptions, deriveJSON)
+import GHC.Generics
 
 data Dice = Dice
   { emoji :: String,
     value :: Integer
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $(deriveJSON defaultOptions ''Dice)
