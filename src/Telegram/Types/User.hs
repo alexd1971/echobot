@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TemplateHaskell #-}
 
@@ -9,6 +10,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics (Generic)
 
 data User = User
   { userId :: Integer,
@@ -21,7 +23,7 @@ data User = User
     canReadAllGroupMessages :: Maybe Bool,
     supportsInlineQueries :: Maybe Bool
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions

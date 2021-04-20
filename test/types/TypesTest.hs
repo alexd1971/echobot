@@ -16,6 +16,7 @@ import Test.Telegram.Types.EncryptedPassportElement (testEncryptedPassportElemen
 import Test.Telegram.Types.Location (testLocation)
 import Test.Telegram.Types.PassportFile (testPassportFile)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
+import Test.Telegram.Types.User (testUser)
 
 main :: IO ()
 main = hspec $ do
@@ -32,4 +33,4 @@ main = hspec $ do
     testEncryptedCredentials
     testPassportFile
     testEncryptedPassportElement
-
+    testUser
