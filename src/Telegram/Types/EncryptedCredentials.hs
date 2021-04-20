@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TemplateHaskell #-}
 
@@ -8,13 +9,14 @@ import Data.Aeson.TH
     defaultOptions,
     deriveJSON,
   )
+import GHC.Generics (Generic)
 
 data EncryptedCredentials = EncryptedCredentials
   { credentialsData :: String,
     hash :: String,
     secret :: String
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
