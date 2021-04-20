@@ -4,7 +4,7 @@
 module Telegram.Types.Dice where
 
 import Data.Aeson.TH (defaultOptions, deriveJSON)
-import GHC.Generics
+import GHC.Generics (Generic)
 
 data Dice = Dice
   { emoji :: String,

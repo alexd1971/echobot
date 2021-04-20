@@ -104,6 +104,7 @@ test-suite types-test
       Test.Telegram.Types.ChatPermissions
       Test.Telegram.Types.Contact
       Test.Telegram.Types.Dice
+      Test.Telegram.Types.Document
       Test.Telegram.Types.General
       Test.Telegram.Types.Location
       Test.Telegram.Types.PhotoSize

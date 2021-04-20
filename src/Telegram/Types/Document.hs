@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.Document where
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics (Generic)
 import Telegram.Types.PhotoSize (PhotoSize)
 
 data Document = Document
@@ -18,7 +20,7 @@ data Document = Document
     mimeType :: Maybe String,
     fileSize :: Maybe Integer
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
