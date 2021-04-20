@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TemplateHaskell #-}
 
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     defaultOptions,
     deriveJSON,
   )
+import GHC.Generics (Generic)
 import Telegram.Types.User (User)
 
 data MessageEntity = MessageEntity
@@ -18,7 +20,7 @@ data MessageEntity = MessageEntity
     user :: Maybe User,
     language :: Maybe String
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
