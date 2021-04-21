@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.InlineKeyboardMarkup where
@@ -8,12 +9,13 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
-import Telegram.Types.InlineKeyboardButton
+import GHC.Generics (Generic)
+import Telegram.Types.InlineKeyboardButton (InlineKeyboardButton)
 
 newtype InlineKeyboardMarkup = InlineKeyboardMarkup
   { inlineKeyboard :: [[InlineKeyboardButton]]
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
