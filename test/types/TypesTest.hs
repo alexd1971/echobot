@@ -15,6 +15,7 @@ import Test.Telegram.Types.EncryptedCredentials (testEncryptedCredentials)
 import Test.Telegram.Types.EncryptedPassportElement (testEncryptedPassportElement)
 import Test.Telegram.Types.Game (testGame)
 import Test.Telegram.Types.Location (testLocation)
+import Test.Telegram.Types.LoginUrl (testLoginUrl)
 import Test.Telegram.Types.MessageEntity (testMessageEntity)
 import Test.Telegram.Types.PassportFile (testPassportFile)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
@@ -38,3 +39,4 @@ main = hspec $ do
     testUser
     testMessageEntity
     testGame
+    testLoginUrl

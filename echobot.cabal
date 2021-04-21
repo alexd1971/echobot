@@ -110,6 +110,7 @@ test-suite types-test
       Test.Telegram.Types.Game
       Test.Telegram.Types.General
       Test.Telegram.Types.Location
+      Test.Telegram.Types.LoginUrl
       Test.Telegram.Types.MessageEntity
       Test.Telegram.Types.PassportFile
       Test.Telegram.Types.PhotoSize
