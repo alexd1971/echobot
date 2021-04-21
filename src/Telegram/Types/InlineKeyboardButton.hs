@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.InlineKeyboardButton where
@@ -9,9 +10,10 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2, emptyObject)
+import GHC.Generics (Generic)
 import Telegram.Types.LoginUrl (LoginUrl)
 
-data CallbackGame = CallbackGame deriving (Show)
+data CallbackGame = CallbackGame deriving (Eq, Show, Generic)
 
 instance FromJSON CallbackGame where
   parseJSON _ = do return CallbackGame
@@ -29,7 +31,7 @@ data InlineKeyboardButton = InlineKeyboardButton
     callbackGame :: Maybe CallbackGame,
     pay :: Maybe Bool
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
