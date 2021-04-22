@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.SuccessfulPayment where
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics
 import Telegram.Types.OrderInfo
 
 data SuccessfulPayment = SuccessfulPayment
@@ -19,7 +21,7 @@ data SuccessfulPayment = SuccessfulPayment
     telegramPaymentChargeId :: String,
     providerPaymentChargeId :: String
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions

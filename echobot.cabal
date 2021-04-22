@@ -126,6 +126,7 @@ test-suite types-test
       Test.Telegram.Types.ProximityAlertTriggered
       Test.Telegram.Types.ShippingAddress
       Test.Telegram.Types.Sticker
+      Test.Telegram.Types.SuccessfulPayment
       Test.Telegram.Types.User
       Paths_echobot
   hs-source-dirs:
