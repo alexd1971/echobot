@@ -16,6 +16,7 @@ import Test.Telegram.Types.EncryptedPassportElement (testEncryptedPassportElemen
 import Test.Telegram.Types.Game (testGame)
 import Test.Telegram.Types.InlineKeyboardButton (testInlineKeyboardButton)
 import Test.Telegram.Types.InlineKeyboardMarkup (testInlineKeyboardMarkup)
+import Test.Telegram.Types.Invoice (testInvoice)
 import Test.Telegram.Types.Location (testLocation)
 import Test.Telegram.Types.LoginUrl (testLoginUrl)
 import Test.Telegram.Types.MessageEntity (testMessageEntity)
@@ -44,3 +45,4 @@ main = hspec $ do
     testLoginUrl
     testInlineKeyboardButton
     testInlineKeyboardMarkup
+    testInvoice
