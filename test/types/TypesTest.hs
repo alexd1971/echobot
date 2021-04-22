@@ -22,6 +22,7 @@ import Test.Telegram.Types.LoginUrl (testLoginUrl)
 import Test.Telegram.Types.MaskPosition (testMaskPosition)
 import Test.Telegram.Types.MessageAutoDeleteTimerChanged (testMessageAutoDeleteTimerChanged)
 import Test.Telegram.Types.MessageEntity (testMessageEntity)
+import Test.Telegram.Types.OrderInfo (testOrderInfo)
 import Test.Telegram.Types.PassportFile (testPassportFile)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
 import Test.Telegram.Types.ShippingAddress (testShippingAddress)
@@ -52,3 +53,4 @@ main = hspec $ do
     testMaskPosition
     testMessageAutoDeleteTimerChanged
     testShippingAddress
+    testOrderInfo

@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.OrderInfo where
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics
 import Telegram.Types.ShippingAddress
 
 data OrderInfo = OrderInfo
@@ -16,7 +18,7 @@ data OrderInfo = OrderInfo
     email :: Maybe String,
     shippingAddress :: Maybe ShippingAddress
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
