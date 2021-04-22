@@ -26,6 +26,8 @@ import Test.Telegram.Types.OrderInfo (testOrderInfo)
 import Test.Telegram.Types.PassportData (testPassportData)
 import Test.Telegram.Types.PassportFile (testPassportFile)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
+import Test.Telegram.Types.Poll (testPoll)
+import Test.Telegram.Types.PollOption (testPollOption)
 import Test.Telegram.Types.ShippingAddress (testShippingAddress)
 import Test.Telegram.Types.User (testUser)
 
@@ -56,3 +58,5 @@ main = hspec $ do
     testShippingAddress
     testOrderInfo
     testPassportData
+    testPollOption
+    testPoll

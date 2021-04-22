@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TemplateHaskell #-}
 
@@ -9,8 +10,9 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
-import Telegram.Types.MessageEntity
-import Telegram.Types.PollOption
+import GHC.Generics (Generic)
+import Telegram.Types.MessageEntity (MessageEntity)
+import Telegram.Types.PollOption (PollOption)
 
 data Poll = Poll
   { pollId :: String,
@@ -18,7 +20,7 @@ data Poll = Poll
     options :: [PollOption],
     totalVoterCount :: Integer,
     isClosed :: Bool,
-    isAnonimous :: Bool,
+    isAnonymous :: Bool,
     pollType :: String,
     allowsMultipleAnswers :: Bool,
     correctOptionId :: Maybe Integer,
@@ -27,12 +29,13 @@ data Poll = Poll
     openPeriod :: Maybe Integer,
     closeDate :: Maybe Integer
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
        { fieldLabelModifier = \case
            "pollId" -> "id"
+           "pollType" -> "type"
            a -> camelTo2 '_' a,
          omitNothingFields = True
        }

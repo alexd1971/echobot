@@ -121,6 +121,8 @@ test-suite types-test
       Test.Telegram.Types.PassportData
       Test.Telegram.Types.PassportFile
       Test.Telegram.Types.PhotoSize
+      Test.Telegram.Types.Poll
+      Test.Telegram.Types.PollOption
       Test.Telegram.Types.ShippingAddress
       Test.Telegram.Types.User
       Paths_echobot
