@@ -129,6 +129,7 @@ test-suite types-test
       Test.Telegram.Types.SuccessfulPayment
       Test.Telegram.Types.User
       Test.Telegram.Types.Venue
+      Test.Telegram.Types.VideoNote
       Paths_echobot
   hs-source-dirs:
       test/types
