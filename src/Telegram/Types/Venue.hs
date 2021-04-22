@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.Venue where
@@ -8,7 +9,8 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
-import Telegram.Types.Location
+import GHC.Generics (Generic)
+import Telegram.Types.Location (Location)
 
 data Venue = Venue
   { location :: Location,
@@ -19,7 +21,7 @@ data Venue = Venue
     googlePlaceId :: Maybe String,
     googlePlaceType :: Maybe String
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions

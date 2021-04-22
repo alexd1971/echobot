@@ -33,6 +33,7 @@ import Test.Telegram.Types.ShippingAddress (testShippingAddress)
 import Test.Telegram.Types.Sticker (testSticker)
 import Test.Telegram.Types.SuccessfulPayment (testSuccessfulPayment)
 import Test.Telegram.Types.User (testUser)
+import Test.Telegram.Types.Venue (testVenue)
 
 main :: IO ()
 main = hspec $ do
@@ -66,3 +67,4 @@ main = hspec $ do
     testProximityAlertTriggered
     testSticker
     testSuccessfulPayment
+    testVenue

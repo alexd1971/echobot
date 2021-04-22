@@ -128,6 +128,7 @@ test-suite types-test
       Test.Telegram.Types.Sticker
       Test.Telegram.Types.SuccessfulPayment
       Test.Telegram.Types.User
+      Test.Telegram.Types.Venue
       Paths_echobot
   hs-source-dirs:
       test/types
