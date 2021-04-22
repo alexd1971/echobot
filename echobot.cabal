@@ -115,6 +115,7 @@ test-suite types-test
       Test.Telegram.Types.Location
       Test.Telegram.Types.LoginUrl
       Test.Telegram.Types.MaskPosition
+      Test.Telegram.Types.MessageAutoDeleteTimerChanged
       Test.Telegram.Types.MessageEntity
       Test.Telegram.Types.PassportFile
       Test.Telegram.Types.PhotoSize

@@ -20,6 +20,7 @@ import Test.Telegram.Types.Invoice (testInvoice)
 import Test.Telegram.Types.Location (testLocation)
 import Test.Telegram.Types.LoginUrl (testLoginUrl)
 import Test.Telegram.Types.MaskPosition (testMaskPosition)
+import Test.Telegram.Types.MessageAutoDeleteTimerChanged (testMessageAutoDeleteTimerChanged)
 import Test.Telegram.Types.MessageEntity (testMessageEntity)
 import Test.Telegram.Types.PassportFile (testPassportFile)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
@@ -48,3 +49,4 @@ main = hspec $ do
     testInlineKeyboardMarkup
     testInvoice
     testMaskPosition
+    testMessageAutoDeleteTimerChanged
