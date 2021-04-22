@@ -24,6 +24,7 @@ import Test.Telegram.Types.MessageAutoDeleteTimerChanged (testMessageAutoDeleteT
 import Test.Telegram.Types.MessageEntity (testMessageEntity)
 import Test.Telegram.Types.PassportFile (testPassportFile)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
+import Test.Telegram.Types.ShippingAddress (testShippingAddress)
 import Test.Telegram.Types.User (testUser)
 
 main :: IO ()
@@ -50,3 +51,4 @@ main = hspec $ do
     testInvoice
     testMaskPosition
     testMessageAutoDeleteTimerChanged
+    testShippingAddress
