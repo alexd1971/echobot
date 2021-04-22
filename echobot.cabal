@@ -118,6 +118,7 @@ test-suite types-test
       Test.Telegram.Types.MessageAutoDeleteTimerChanged
       Test.Telegram.Types.MessageEntity
       Test.Telegram.Types.OrderInfo
+      Test.Telegram.Types.PassportData
       Test.Telegram.Types.PassportFile
       Test.Telegram.Types.PhotoSize
       Test.Telegram.Types.ShippingAddress

@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.PassportData where
@@ -8,20 +10,21 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics (Generic)
 import Telegram.Types.EncryptedCredentials (EncryptedCredentials)
-import Telegram.Types.EncryptedPassportElement
-  ( EncryptedPassportElement,
-  )
+import Telegram.Types.EncryptedPassportElement (EncryptedPassportElement)
 
 data PassportData = PassportData
   { passportData :: [EncryptedPassportElement],
     credentials :: EncryptedCredentials
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
-       { fieldLabelModifier = camelTo2 '_',
+       { fieldLabelModifier = \case
+           "passportData" -> "data"
+           a -> camelTo2 '_' a,
          omitNothingFields = True
        }
      ''PassportData
