@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.Sticker where
@@ -8,6 +9,7 @@ import Data.Aeson.TH
     deriveJSON,
   )
 import Data.Aeson.Types (camelTo2)
+import GHC.Generics
 import Telegram.Types.MaskPosition (MaskPosition)
 import Telegram.Types.PhotoSize (PhotoSize)
 
@@ -23,7 +25,7 @@ data Sticker = Sticker
     maskPosition :: Maybe MaskPosition,
     fileSize :: Maybe Integer
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions

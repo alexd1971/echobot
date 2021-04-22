@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeOperators #-}
 
-module Test.Telegram.Types.Poll (testPoll) where
+module Test.Telegram.Types.Sticker (testSticker) where
 
 import Data.Aeson (ToJSON (toJSON))
 import Data.List (sort)
@@ -10,9 +10,9 @@ import Generic.Random
     genericArbitraryUG,
     type (:+) (..),
   )
-import Telegram.Types.MessageEntity
-import Telegram.Types.Poll
-import Telegram.Types.PollOption
+import Telegram.Types.MaskPosition
+import Telegram.Types.PhotoSize
+import Telegram.Types.Sticker
 import Test.Hspec (Spec, describe, it, runIO, shouldBe)
 import Test.Hspec.QuickCheck (modifyMaxSuccess, prop)
 import Test.QuickCheck (Arbitrary (arbitrary), Gen, generate)
@@ -22,46 +22,45 @@ import Test.Telegram.Types.General
     genAlwaysJust,
     objectKeys,
   )
-import Test.Telegram.Types.MessageEntity
-import Test.Telegram.Types.PollOption
+import Test.Telegram.Types.MaskPosition
+import Test.Telegram.Types.PhotoSize
 
-instance Arbitrary Poll where
+instance Arbitrary Sticker where
   arbitrary = genericArbitraryU
 
-instance JSONTestable Poll
+instance JSONTestable Sticker
 
 allKeys =
   sort
-    [ "id",
-      "question",
-      "options",
-      "total_voter_count",
-      "is_closed",
-      "is_anonymous",
-      "type",
-      "allows_multiple_answers",
-      "correct_option_id",
-      "explanation",
-      "explanation_entities",
-      "open_period",
-      "close_date"
+    [ "file_id",
+      "file_unique_id",
+      "width",
+      "height",
+      "is_animated",
+      "thumb",
+      "emoji",
+      "set_name",
+      "mask_position",
+      "file_size"
     ]
 
 generators ::
   Gen (Maybe Integer)
     :+ Gen (Maybe String)
-    :+ Gen (Maybe [MessageEntity])
+    :+ Gen (Maybe PhotoSize)
+    :+ Gen (Maybe MaskPosition)
 generators =
   genAlwaysJust
     :+ genAlwaysJust
     :+ genAlwaysJust
+    :+ genAlwaysJust
 
-objectWithAllKeys :: IO Poll
+objectWithAllKeys :: IO Sticker
 objectWithAllKeys = generate $ genericArbitraryUG generators
 
-testPoll :: Spec
-testPoll = do
-  describe "Test Poll JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty Poll)
+testSticker :: Spec
+testSticker = do
+  describe "Test Sticker JSON" $ do
+    prop "encode/decode" (propJSON :: JSONProperty Sticker)
     object <- runIO objectWithAllKeys
     it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys

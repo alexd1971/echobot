@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Telegram.Types.ProximityAlertTriggered where
@@ -7,6 +8,7 @@ import Data.Aeson.TH
     defaultOptions,
     deriveJSON,
   )
+import GHC.Generics (Generic)
 import Telegram.Types.User (User)
 
 data ProximityAlertTriggered = ProximityAlertTriggered
@@ -14,7 +16,7 @@ data ProximityAlertTriggered = ProximityAlertTriggered
     watcher :: User,
     distance :: Integer
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 $( deriveJSON
      defaultOptions
