@@ -36,6 +36,8 @@ import Test.Telegram.Types.User (testUser)
 import Test.Telegram.Types.Venue (testVenue)
 import Test.Telegram.Types.Video (testVideo)
 import Test.Telegram.Types.VideoNote (testVideoNote)
+import Test.Telegram.Types.Voice (testVoice)
+import Test.Telegram.Types.ChatMessage 
 
 main :: IO ()
 main = hspec $ do
@@ -72,3 +74,7 @@ main = hspec $ do
     testVenue
     testVideoNote
     testVideo
+    testVoice
+    testChatPhoto
+    testChat
+    testMessage

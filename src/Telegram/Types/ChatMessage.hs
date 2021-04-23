@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TemplateHaskell #-}
@@ -13,6 +14,7 @@ import Data.Aeson
   )
 import Data.Aeson.TH (deriveJSON)
 import Data.Aeson.Types (emptyObject)
+import GHC.Generics (Generic)
 import Telegram.Types.Animation (Animation)
 import Telegram.Types.Audio (Audio)
 import Telegram.Types.ChatLocation (ChatLocation)
@@ -39,7 +41,7 @@ import Telegram.Types.Video (Video)
 import Telegram.Types.VideoNote (VideoNote)
 import Telegram.Types.Voice (Voice)
 
-data VoiceChatStarted = VoiceChatStarted deriving (Show)
+data VoiceChatStarted = VoiceChatStarted deriving (Eq, Show, Generic)
 
 instance FromJSON VoiceChatStarted where
   parseJSON _ = do return VoiceChatStarted
@@ -47,11 +49,11 @@ instance FromJSON VoiceChatStarted where
 instance ToJSON VoiceChatStarted where
   toJSON _ = emptyObject
 
-newtype VoiceChatEnded = VoiceChatEnded {duration :: Integer} deriving (Show)
+newtype VoiceChatEnded = VoiceChatEnded {duration :: Integer} deriving (Eq, Show, Generic)
 
 deriveJSON defaultOptions ''VoiceChatEnded
 
-newtype VoiceChatParticipantsInvited = VoiceChatParticipantsInvited {users :: Maybe [User]} deriving (Show)
+newtype VoiceChatParticipantsInvited = VoiceChatParticipantsInvited {users :: Maybe [User]} deriving (Eq, Show, Generic)
 
 deriveJSON defaultOptions ''VoiceChatParticipantsInvited
 
@@ -61,7 +63,7 @@ data ChatPhoto = ChatPhoto
     bigFileId :: String,
     bigFileUniqueId :: String
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 deriveJSON
   defaultOptions
@@ -83,14 +85,14 @@ data Chat = Chat
     inviteLink :: Maybe String,
     pinnedMessage :: Maybe Message,
     permissions :: Maybe ChatPermissions,
-    showModeDelay :: Maybe Integer,
+    slowModeDelay :: Maybe Integer,
     messageAutoDeleteTime :: Maybe Integer,
     stickerSetName :: Maybe String,
     canSetStickerSet :: Maybe Bool,
     linkedChatId :: Maybe Integer,
     location :: Maybe ChatLocation
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 data Message = Message
   { messageId :: Integer,
@@ -143,13 +145,13 @@ data Message = Message
     successfulPayment :: Maybe SuccessfulPayment,
     connectedWebsite :: Maybe String,
     passportData :: Maybe PassportData,
-    proximityAlertTriggerd :: Maybe ProximityAlertTriggered,
-    voisChatStarted :: Maybe VoiceChatStarted,
+    proximityAlertTriggered :: Maybe ProximityAlertTriggered,
+    voiceChatStarted :: Maybe VoiceChatStarted,
     voiceChatEnded :: Maybe VoiceChatEnded,
     voiceChatParticipantsInvited :: Maybe VoiceChatParticipantsInvited,
     replyMarkup :: Maybe InlineKeyboardMarkup
   }
-  deriving (Show)
+  deriving (Eq, Show, Generic)
 
 deriveJSON
   defaultOptions

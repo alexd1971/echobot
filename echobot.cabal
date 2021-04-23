@@ -101,6 +101,7 @@ test-suite types-test
       Test.Telegram.Types.Animation
       Test.Telegram.Types.Audio
       Test.Telegram.Types.ChatLocation
+      Test.Telegram.Types.ChatMessage
       Test.Telegram.Types.ChatPermissions
       Test.Telegram.Types.Contact
       Test.Telegram.Types.Dice
@@ -131,6 +132,7 @@ test-suite types-test
       Test.Telegram.Types.Venue
       Test.Telegram.Types.Video
       Test.Telegram.Types.VideoNote
+      Test.Telegram.Types.Voice
       Paths_echobot
   hs-source-dirs:
       test/types
