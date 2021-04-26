@@ -31,6 +31,7 @@ library
       Telegram.Types.ChatLocation
       Telegram.Types.ChatMessage
       Telegram.Types.ChatPermissions
+      Telegram.Types.ChosenInlineResult
       Telegram.Types.Contact
       Telegram.Types.Dice
       Telegram.Types.Document
@@ -104,6 +105,7 @@ test-suite types-test
       Test.Telegram.Types.ChatLocation
       Test.Telegram.Types.ChatMessage
       Test.Telegram.Types.ChatPermissions
+      Test.Telegram.Types.ChosenInlineResult
       Test.Telegram.Types.Contact
       Test.Telegram.Types.Dice
       Test.Telegram.Types.Document

@@ -9,6 +9,7 @@ import Test.Telegram.Types.Audio (testAudio)
 import Test.Telegram.Types.ChatLocation (testChatLocation)
 import Test.Telegram.Types.ChatMessage (testChat, testChatPhoto, testMessage)
 import Test.Telegram.Types.ChatPermissions (testChatPermissions)
+import Test.Telegram.Types.ChosenInlineResult (testChosenInlineResult)
 import Test.Telegram.Types.Contact (testContact)
 import Test.Telegram.Types.Dice (testDice)
 import Test.Telegram.Types.Document (testDocument)
@@ -49,6 +50,7 @@ main = hspec $ do
     testChatLocation
     testChatPermissions
     testChatPhoto
+    testChosenInlineResult
     testContact
     testDice
     testDocument
