@@ -7,6 +7,7 @@ import Test.Hspec.QuickCheck (modifyMaxSuccess)
 import Test.Telegram.Types.Animation (testAnimation)
 import Test.Telegram.Types.Audio (testAudio)
 import Test.Telegram.Types.ChatLocation (testChatLocation)
+import Test.Telegram.Types.ChatMessage (testChat, testChatPhoto, testMessage)
 import Test.Telegram.Types.ChatPermissions (testChatPermissions)
 import Test.Telegram.Types.Contact (testContact)
 import Test.Telegram.Types.Dice (testDice)
@@ -16,6 +17,7 @@ import Test.Telegram.Types.EncryptedPassportElement (testEncryptedPassportElemen
 import Test.Telegram.Types.Game (testGame)
 import Test.Telegram.Types.InlineKeyboardButton (testInlineKeyboardButton)
 import Test.Telegram.Types.InlineKeyboardMarkup (testInlineKeyboardMarkup)
+import Test.Telegram.Types.InlineQuery (testInlineQuery)
 import Test.Telegram.Types.Invoice (testInvoice)
 import Test.Telegram.Types.Location (testLocation)
 import Test.Telegram.Types.LoginUrl (testLoginUrl)
@@ -37,44 +39,44 @@ import Test.Telegram.Types.Venue (testVenue)
 import Test.Telegram.Types.Video (testVideo)
 import Test.Telegram.Types.VideoNote (testVideoNote)
 import Test.Telegram.Types.Voice (testVoice)
-import Test.Telegram.Types.ChatMessage 
 
 main :: IO ()
 main = hspec $ do
   modifyMaxSuccess (const 10) $ do
-    testPhotoSize
     testAnimation
     testAudio
-    testLocation
+    testChat
     testChatLocation
     testChatPermissions
+    testChatPhoto
     testContact
     testDice
     testDocument
     testEncryptedCredentials
-    testPassportFile
     testEncryptedPassportElement
-    testUser
-    testMessageEntity
     testGame
-    testLoginUrl
     testInlineKeyboardButton
     testInlineKeyboardMarkup
+    testInlineQuery
     testInvoice
+    testLocation
+    testLoginUrl
     testMaskPosition
+    testMessage
     testMessageAutoDeleteTimerChanged
-    testShippingAddress
+    testMessageEntity
     testOrderInfo
     testPassportData
-    testPollOption
+    testPassportFile
+    testPhotoSize
     testPoll
+    testPollOption
     testProximityAlertTriggered
+    testShippingAddress
     testSticker
     testSuccessfulPayment
+    testUser
     testVenue
-    testVideoNote
     testVideo
+    testVideoNote
     testVoice
-    testChatPhoto
-    testChat
-    testMessage

@@ -39,6 +39,7 @@ library
       Telegram.Types.Game
       Telegram.Types.InlineKeyboardButton
       Telegram.Types.InlineKeyboardMarkup
+      Telegram.Types.InlineQuery
       Telegram.Types.Invoice
       Telegram.Types.Location
       Telegram.Types.LoginUrl
@@ -112,6 +113,7 @@ test-suite types-test
       Test.Telegram.Types.General
       Test.Telegram.Types.InlineKeyboardButton
       Test.Telegram.Types.InlineKeyboardMarkup
+      Test.Telegram.Types.InlineQuery
       Test.Telegram.Types.Invoice
       Test.Telegram.Types.Location
       Test.Telegram.Types.LoginUrl
