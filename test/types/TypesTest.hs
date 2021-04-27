@@ -6,6 +6,7 @@ import Test.Hspec (hspec)
 import Test.Hspec.QuickCheck (modifyMaxSuccess)
 import Test.Telegram.Types.Animation (testAnimation)
 import Test.Telegram.Types.Audio (testAudio)
+import Test.Telegram.Types.CallbackQuery (testCallbackQuery)
 import Test.Telegram.Types.ChatLocation (testChatLocation)
 import Test.Telegram.Types.ChatMessage (testChat, testChatPhoto, testMessage)
 import Test.Telegram.Types.ChatPermissions (testChatPermissions)
@@ -46,6 +47,7 @@ main = hspec $ do
   modifyMaxSuccess (const 10) $ do
     testAnimation
     testAudio
+    testCallbackQuery
     testChat
     testChatLocation
     testChatPermissions
