@@ -53,6 +53,7 @@ library
       Telegram.Types.PassportFile
       Telegram.Types.PhotoSize
       Telegram.Types.Poll
+      Telegram.Types.PollAnswer
       Telegram.Types.PollOption
       Telegram.Types.PreCheckoutQuery
       Telegram.Types.ProximityAlertTriggered
@@ -131,6 +132,7 @@ test-suite types-test
       Test.Telegram.Types.PassportFile
       Test.Telegram.Types.PhotoSize
       Test.Telegram.Types.Poll
+      Test.Telegram.Types.PollAnswer
       Test.Telegram.Types.PollOption
       Test.Telegram.Types.PreCheckoutQuery
       Test.Telegram.Types.ProximityAlertTriggered

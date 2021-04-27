@@ -31,6 +31,7 @@ import Test.Telegram.Types.PassportData (testPassportData)
 import Test.Telegram.Types.PassportFile (testPassportFile)
 import Test.Telegram.Types.PhotoSize (testPhotoSize)
 import Test.Telegram.Types.Poll (testPoll)
+import Test.Telegram.Types.PollAnswer (testPollAnswer)
 import Test.Telegram.Types.PollOption (testPollOption)
 import Test.Telegram.Types.PreCheckoutQuery (testPreCheckoutQuery)
 import Test.Telegram.Types.ProximityAlertTriggered (testProximityAlertTriggered)
@@ -76,6 +77,7 @@ main = hspec $ do
     testPassportFile
     testPhotoSize
     testPoll
+    testPollAnswer
     testPollOption
     testPreCheckoutQuery
     testProximityAlertTriggered
