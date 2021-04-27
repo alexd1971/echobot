@@ -64,6 +64,7 @@ library
       Telegram.Types.ShippingQuery
       Telegram.Types.Sticker
       Telegram.Types.SuccessfulPayment
+      Telegram.Types.Update
       Telegram.Types.User
       Telegram.Types.Venue
       Telegram.Types.Video
@@ -146,6 +147,7 @@ test-suite types-test
       Test.Telegram.Types.ShippingQuery
       Test.Telegram.Types.Sticker
       Test.Telegram.Types.SuccessfulPayment
+      Test.Telegram.Types.Update
       Test.Telegram.Types.User
       Test.Telegram.Types.Venue
       Test.Telegram.Types.Video

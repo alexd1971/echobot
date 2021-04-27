@@ -42,6 +42,7 @@ import Test.Telegram.Types.ShippingAddress (testShippingAddress)
 import Test.Telegram.Types.ShippingQuery (testShippingQuery)
 import Test.Telegram.Types.Sticker (testSticker)
 import Test.Telegram.Types.SuccessfulPayment (testSuccessfulPayment)
+import Test.Telegram.Types.Update (testUpdate)
 import Test.Telegram.Types.User (testUser)
 import Test.Telegram.Types.Venue (testVenue)
 import Test.Telegram.Types.Video (testVideo)
@@ -91,6 +92,7 @@ main = hspec $ do
     testShippingQuery
     testSticker
     testSuccessfulPayment
+    testUpdate
     testUser
     testVenue
     testVideo
