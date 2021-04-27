@@ -34,6 +34,7 @@ import Test.Telegram.Types.Poll (testPoll)
 import Test.Telegram.Types.PollOption (testPollOption)
 import Test.Telegram.Types.ProximityAlertTriggered (testProximityAlertTriggered)
 import Test.Telegram.Types.ShippingAddress (testShippingAddress)
+import Test.Telegram.Types.ShippingQuery (testShippingQuery)
 import Test.Telegram.Types.Sticker (testSticker)
 import Test.Telegram.Types.SuccessfulPayment (testSuccessfulPayment)
 import Test.Telegram.Types.User (testUser)
@@ -77,6 +78,7 @@ main = hspec $ do
     testPollOption
     testProximityAlertTriggered
     testShippingAddress
+    testShippingQuery
     testSticker
     testSuccessfulPayment
     testUser
