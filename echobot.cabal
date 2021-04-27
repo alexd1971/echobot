@@ -54,6 +54,7 @@ library
       Telegram.Types.PhotoSize
       Telegram.Types.Poll
       Telegram.Types.PollOption
+      Telegram.Types.PreCheckoutQuery
       Telegram.Types.ProximityAlertTriggered
       Telegram.Types.ShippingAddress
       Telegram.Types.ShippingQuery
@@ -131,6 +132,7 @@ test-suite types-test
       Test.Telegram.Types.PhotoSize
       Test.Telegram.Types.Poll
       Test.Telegram.Types.PollOption
+      Test.Telegram.Types.PreCheckoutQuery
       Test.Telegram.Types.ProximityAlertTriggered
       Test.Telegram.Types.ShippingAddress
       Test.Telegram.Types.ShippingQuery
