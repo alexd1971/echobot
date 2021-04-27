@@ -11,7 +11,6 @@ import Data.Aeson
   )
 import Data.Aeson.TH (deriveJSON)
 import GHC.Generics (Generic)
-import Telegram.Types.Location (Location)
 import Telegram.Types.User (User)
 
 data PollAnswer = PollAnswer

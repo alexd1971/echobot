@@ -30,6 +30,7 @@ library
       Telegram.Types.Audio
       Telegram.Types.CallbackQuery
       Telegram.Types.ChatLocation
+      Telegram.Types.ChatMember
       Telegram.Types.ChatMessage
       Telegram.Types.ChatPermissions
       Telegram.Types.ChosenInlineResult
@@ -108,6 +109,7 @@ test-suite types-test
       Test.Telegram.Types.Audio
       Test.Telegram.Types.CallbackQuery
       Test.Telegram.Types.ChatLocation
+      Test.Telegram.Types.ChatMember
       Test.Telegram.Types.ChatMessage
       Test.Telegram.Types.ChatPermissions
       Test.Telegram.Types.ChosenInlineResult

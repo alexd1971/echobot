@@ -8,6 +8,7 @@ import Test.Telegram.Types.Animation (testAnimation)
 import Test.Telegram.Types.Audio (testAudio)
 import Test.Telegram.Types.CallbackQuery (testCallbackQuery)
 import Test.Telegram.Types.ChatLocation (testChatLocation)
+import Test.Telegram.Types.ChatMember (testChatMember)
 import Test.Telegram.Types.ChatMessage (testChat, testChatPhoto, testMessage)
 import Test.Telegram.Types.ChatPermissions (testChatPermissions)
 import Test.Telegram.Types.ChosenInlineResult (testChosenInlineResult)
@@ -53,6 +54,7 @@ main = hspec $ do
     testCallbackQuery
     testChat
     testChatLocation
+    testChatMember
     testChatPermissions
     testChatPhoto
     testChosenInlineResult
