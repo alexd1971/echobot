@@ -20,13 +20,14 @@ extra-source-files:
 description:         Please see the README on GitHub at <https://github.com/githubuser/echobot#readme>
 
 dependencies:
-- base >= 4.7 && < 5
-- aeson
-- generic-random
-- unordered-containers
-- hspec
 - QuickCheck
+- aeson
+- base >= 4.7 && < 5
+- generic-random
+- hslogger
+- hspec
 - text
+- unordered-containers
 - yaml
 
 library:

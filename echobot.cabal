@@ -79,6 +79,7 @@ library
     , aeson
     , base >=4.7 && <5
     , generic-random
+    , hslogger
     , hspec
     , text
     , unordered-containers
@@ -98,6 +99,7 @@ executable echobot-exe
     , base >=4.7 && <5
     , echobot
     , generic-random
+    , hslogger
     , hspec
     , text
     , unordered-containers
@@ -118,6 +120,7 @@ test-suite config
     , base >=4.7 && <5
     , echobot
     , generic-random
+    , hslogger
     , hspec
     , text
     , unordered-containers
@@ -183,6 +186,7 @@ test-suite types
     , base >=4.7 && <5
     , echobot
     , generic-random
+    , hslogger
     , hspec
     , text
     , unordered-containers
