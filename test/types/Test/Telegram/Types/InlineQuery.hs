@@ -47,7 +47,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testInlineQuery :: Spec
 testInlineQuery = do
-  describe "Test InlineQuery JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty InlineQuery)
+  describe "InlineQuery" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty InlineQuery)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

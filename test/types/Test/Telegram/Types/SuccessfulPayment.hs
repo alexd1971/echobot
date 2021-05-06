@@ -51,7 +51,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testSuccessfulPayment :: Spec
 testSuccessfulPayment = do
-  describe "Test SuccessfulPayment JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty SuccessfulPayment)
+  describe "SuccessfulPayment" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty SuccessfulPayment)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

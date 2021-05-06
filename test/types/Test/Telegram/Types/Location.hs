@@ -48,7 +48,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testLocation :: Spec
 testLocation = do
-  describe "Test Location JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty Location)
+  describe "Location" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty Location)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

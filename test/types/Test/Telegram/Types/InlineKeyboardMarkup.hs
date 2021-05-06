@@ -37,7 +37,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testInlineKeyboardMarkup :: Spec
 testInlineKeyboardMarkup = do
-  describe "Test InlineKeyboardMarkup JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty InlineKeyboardMarkup)
+  describe "InlineKeyboardMarkup" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty InlineKeyboardMarkup)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

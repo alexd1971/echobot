@@ -38,7 +38,7 @@ objectWithAllKeys = generate arbitrary
 
 testMaskPosition :: Spec
 testMaskPosition = do
-  describe "Test MaskPosition JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty MaskPosition)
+  describe "MaskPosition" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty MaskPosition)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

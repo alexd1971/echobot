@@ -55,7 +55,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testVideo :: Spec
 testVideo = do
-  describe "Test Video JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty Video)
+  describe "Video" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty Video)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

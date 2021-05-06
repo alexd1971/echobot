@@ -49,7 +49,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testCallbackQuery :: Spec
 testCallbackQuery = do
-  describe "Test CallbackQuery JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty CallbackQuery)
+  describe "CallbackQuery" $ do
+    prop "JSON-encode/decode" (propJSON :: JSONProperty CallbackQuery)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

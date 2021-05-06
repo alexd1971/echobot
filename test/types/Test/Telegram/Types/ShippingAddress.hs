@@ -40,7 +40,7 @@ objectWithAllKeys = generate arbitrary
 
 testShippingAddress :: Spec
 testShippingAddress = do
-  describe "Test ShippingAddress JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty ShippingAddress)
+  describe "ShippingAddress" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty ShippingAddress)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

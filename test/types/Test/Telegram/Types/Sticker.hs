@@ -60,7 +60,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testSticker :: Spec
 testSticker = do
-  describe "Test Sticker JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty Sticker)
+  describe "Sticker" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty Sticker)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

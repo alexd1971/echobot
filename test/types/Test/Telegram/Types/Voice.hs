@@ -47,7 +47,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testVoice :: Spec
 testVoice = do
-  describe "Test Voice JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty Voice)
+  describe "Voice" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty Voice)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

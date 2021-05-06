@@ -39,7 +39,7 @@ objectWithAllKeys = generate arbitrary
 
 testProximityAlertTriggered :: Spec
 testProximityAlertTriggered = do
-  describe "Test ProximityAlertTriggered JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty ProximityAlertTriggered)
+  describe "ProximityAlertTriggered" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty ProximityAlertTriggered)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

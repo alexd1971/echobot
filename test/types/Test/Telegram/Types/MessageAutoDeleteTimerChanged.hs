@@ -32,7 +32,7 @@ objectWithAllKeys = generate arbitrary
 
 testMessageAutoDeleteTimerChanged :: Spec
 testMessageAutoDeleteTimerChanged = do
-  describe "Test MessageAutoDeleteTimerChanged JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty MessageAutoDeleteTimerChanged)
+  describe "MessageAutoDeleteTimerChanged" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty MessageAutoDeleteTimerChanged)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

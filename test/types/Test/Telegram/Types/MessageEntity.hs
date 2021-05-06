@@ -50,7 +50,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testMessageEntity :: Spec
 testMessageEntity = do
-  describe "Test MessageEntity JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty MessageEntity)
+  describe "MessageEntity" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty MessageEntity)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

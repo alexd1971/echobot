@@ -46,7 +46,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testChatInviteLink :: Spec
 testChatInviteLink = do
-  describe "Test ChatInviteLink JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty ChatInviteLink)
+  describe "ChatInviteLink" $ do
+    prop "JSON-encode/decode" (propJSON :: JSONProperty ChatInviteLink)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

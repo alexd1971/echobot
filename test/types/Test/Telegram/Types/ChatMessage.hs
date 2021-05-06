@@ -114,10 +114,10 @@ chatPhotoWithAllKeys = generate arbitrary
 
 testChatPhoto :: Spec
 testChatPhoto = do
-  describe "Test ChatPhoto JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty ChatPhoto)
+  describe "ChatPhoto" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty ChatPhoto)
     object <- runIO chatPhotoWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just chatPhotoKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just chatPhotoKeys
 
 instance Arbitrary Chat where
   arbitrary = genericArbitraryUG genNothingMessage
@@ -168,10 +168,10 @@ chatWithAllKeys = generate $ genericArbitraryUG chatKeyGenerators
 
 testChat :: Spec
 testChat = do
-  describe "Test Chat JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty Chat)
+  describe "Chat" $ do
+    prop "JSON-encode/decode" (propJSON :: JSONProperty Chat)
     object <- runIO chatWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just chatKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just chatKeys
 
 instance Arbitrary Message where
   arbitrary = genericArbitraryUG genNothingMessage
@@ -307,7 +307,7 @@ messageWithAllKeys = generate $ genericArbitraryUG messageKeyGenerators
 
 testMessage :: Spec
 testMessage = do
-  describe "Test Message JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty Message)
+  describe "Message" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty Message)
     object <- runIO messageWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just messageKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just messageKeys

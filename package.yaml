@@ -44,7 +44,7 @@ executables:
     - echobot
 
 tests:
-  types-test:
+  types:
     main:                TypesTest.hs
     source-dirs:         test/types
     ghc-options:
@@ -53,9 +53,9 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - echobot
-  config-test:
+  config:
     main:                Main.hs
-    source-dirs:         test/bot_config
+    source-dirs:         test/config
     ghc-options:
     - -threaded
     - -rtsopts

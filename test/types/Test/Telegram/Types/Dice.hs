@@ -36,7 +36,7 @@ objectWithAllKeys = generate arbitrary
 
 testDice :: Spec
 testDice = do
-  describe "Test Dice JSON" $ do
+  describe "Dice" $ do
     prop "encode/decode" (propJSON :: JSONProperty Dice)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

@@ -38,7 +38,7 @@ objectWithAllKeys = generate arbitrary
 
 testPassportFile :: Spec
 testPassportFile = do
-  describe "Test PassportFile JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty PassportFile)
+  describe "PassportFile" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty PassportFile)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

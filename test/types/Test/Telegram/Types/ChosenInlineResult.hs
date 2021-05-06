@@ -47,7 +47,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testChosenInlineResult :: Spec
 testChosenInlineResult = do
-  describe "Test ChosenInlineResult JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty ChosenInlineResult)
+  describe "ChosenInlineResult" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty ChosenInlineResult)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

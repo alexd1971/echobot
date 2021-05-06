@@ -37,7 +37,7 @@ objectWithAllKeys = generate arbitrary
 
 testEncryptedCredentials :: Spec
 testEncryptedCredentials = do
-  describe "Test EncryptedCredentials JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty EncryptedCredentials)
+  describe "EncryptedCredentials" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty EncryptedCredentials)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

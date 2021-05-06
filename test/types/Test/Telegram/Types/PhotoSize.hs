@@ -38,7 +38,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testPhotoSize :: Spec
 testPhotoSize = do
-  describe "Test PhotoSize JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty PhotoSize)
+  describe "PhotoSize" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty PhotoSize)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys

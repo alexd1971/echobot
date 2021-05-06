@@ -56,7 +56,7 @@ objectWithAllKeys = generate $ genericArbitraryUG generators
 
 testEncryptedPassportElement :: Spec
 testEncryptedPassportElement = do
-  describe "Test EncryptedPassportElement JSON" $ do
-    prop "encode/decode" (propJSON :: JSONProperty EncryptedPassportElement)
+  describe "EncryptedPassportElement" $ do
+    prop "JSON encode/decode" (propJSON :: JSONProperty EncryptedPassportElement)
     object <- runIO objectWithAllKeys
-    it "correct key names encoding" $ objectKeys (toJSON object) `shouldBe` Just allKeys
+    it "has correct JSON-key names" $ objectKeys (toJSON object) `shouldBe` Just allKeys
