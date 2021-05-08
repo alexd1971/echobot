@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       Config
+      Logging
       Telegram.Types.Animation
       Telegram.Types.Audio
       Telegram.Types.CallbackQuery
@@ -81,6 +82,7 @@ library
     , generic-random
     , hslogger
     , hspec
+    , mtl
     , text
     , unordered-containers
     , yaml
@@ -101,6 +103,7 @@ executable echobot-exe
     , generic-random
     , hslogger
     , hspec
+    , mtl
     , text
     , unordered-containers
     , yaml
@@ -122,6 +125,7 @@ test-suite config
     , generic-random
     , hslogger
     , hspec
+    , mtl
     , text
     , unordered-containers
     , yaml
@@ -188,6 +192,7 @@ test-suite types
     , generic-random
     , hslogger
     , hspec
+    , mtl
     , text
     , unordered-containers
     , yaml

@@ -9,9 +9,10 @@ import Data.Aeson
     (.:),
     (.:?),
   )
-import Data.Aeson.Types (emptyObject)
+import Data.Aeson.Types (parseMaybe, emptyObject)
 import Data.Text (Text)
-import Data.Yaml.Config (ignoreEnv, loadYamlSettings)
+import Data.Yaml ( decodeFileEither )
+import Data.Maybe
 
 data RepeatConf = RepeatConf {message :: Text, defaultCount :: Int} deriving (Eq, Show)
 
@@ -57,4 +58,10 @@ configFile :: FilePath
 configFile = "config.yaml"
 
 readConfig :: IO Config
-readConfig = loadYamlSettings [configFile] [] ignoreEnv
+readConfig = do
+  result <- decodeFileEither configFile
+  case result of
+    Right config -> return config
+    Left exception -> do
+      print exception
+      return $ fromJust $ parseMaybe  parseJSON  emptyObject

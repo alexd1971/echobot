@@ -26,6 +26,7 @@ dependencies:
 - generic-random
 - hslogger
 - hspec
+- mtl
 - text
 - unordered-containers
 - yaml
