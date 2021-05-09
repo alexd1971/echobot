@@ -1,21 +1,69 @@
 module Logging where
 
-import Config
+import Config (Config (logLevel), ConfigReader)
 import Control.Monad.Reader
-import System.IO
-import System.Log.Formatter
-import System.Log.Handler (setFormatter)
-import System.Log.Handler.Simple
-import System.Log.Handler.Syslog
-import System.Log.Logger
+  ( MonadIO (liftIO),
+    MonadReader (ask),
+  )
 import Data.Char (toUpper)
+import System.IO
+  ( BufferMode (NoBuffering),
+    Handle,
+    hSetBuffering,
+    stderr,
+    stdout,
+  )
+import System.Log.Formatter (LogFormatter, simpleLogFormatter)
+import System.Log.Handler (setFormatter)
+import System.Log.Handler.Simple (GenericHandler, streamHandler)
+import System.Log.Handler.Syslog ()
+import System.Log.Logger
+  (alertM, criticalM, emergencyM, noticeM, errorM, warningM, infoM, debugM,  Priority (ERROR),
+    rootLoggerName,
+    setHandlers,
+    setLevel,
+    updateGlobalLogger,
+  )
 
-initLogging :: ReaderT Config IO ()
-initLogging = do
-  liftIO (hSetBuffering stdout NoBuffering)
-  liftIO (hSetBuffering stderr NoBuffering)
+logFormatter :: LogFormatter a
+logFormatter = simpleLogFormatter "$time - [$prio] - $msg"
+
+mkGenericHandler :: Handle -> Priority -> IO (GenericHandler Handle)
+mkGenericHandler handle priority = flip setFormatter logFormatter <$> streamHandler handle priority
+
+initLogger :: ConfigReader ()
+initLogger = do
   config <- ask
-  let logFormatter = simpleLogFormatter "$time - [$prio] - $msg"
-      prioriry = read . map toUpper $ logLevel config :: Priority
-  consoleHandler <- liftIO (flip setFormatter logFormatter <$> streamHandler stdout prioriry)
-  liftIO . updateGlobalLogger rootLoggerName $ (setLevel prioriry . setHandlers [consoleHandler])
+  let prioriry = read . map toUpper $ logLevel config :: Priority
+  liftIO (hSetBuffering stdout NoBuffering)
+  infoHandler <- liftIO $ mkGenericHandler stdout prioriry
+  liftIO (hSetBuffering stderr NoBuffering)
+  errorHandler <- liftIO $ mkGenericHandler stderr ERROR
+  liftIO
+    . updateGlobalLogger rootLoggerName
+    $ setLevel prioriry
+          . setHandlers [infoHandler, errorHandler]
+
+debug :: String -> IO ()
+debug = debugM rootLoggerName
+
+info :: String -> IO ()
+info = infoM rootLoggerName
+
+notice :: String -> IO ()
+notice = noticeM rootLoggerName
+
+warning :: String -> IO ()
+warning = warningM rootLoggerName
+
+error :: String -> IO ()
+error = errorM rootLoggerName
+
+critical :: String -> IO ()
+critical = criticalM rootLoggerName
+
+alert :: String -> IO ()
+alert = alertM rootLoggerName
+
+emergency :: String -> IO ()
+emergency = emergencyM rootLoggerName

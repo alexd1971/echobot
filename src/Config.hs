@@ -2,19 +2,27 @@
 
 module Config where
 
+import Control.Exception
+import Control.Monad.Reader (ReaderT (runReaderT))
 import Data.Aeson
   ( FromJSON (parseJSON),
+    Result (Success),
     withObject,
     (.!=),
     (.:),
     (.:?),
   )
-import Data.Aeson.Types (parseMaybe, emptyObject)
-import Data.Text (Text)
-import Data.Yaml ( decodeFileEither )
+import Data.Aeson.Types (emptyObject, parse, parseMaybe)
 import Data.Maybe
+import Data.Text (Text)
+import Data.Yaml (decodeFileEither)
+import System.Log.Logger
 
-data RepeatConf = RepeatConf {message :: Text, defaultCount :: Int} deriving (Eq, Show)
+data RepeatConf = RepeatConf
+  { message :: Text,
+    defaultCount :: Int
+  }
+  deriving (Eq, Show)
 
 instance FromJSON RepeatConf where
   parseJSON = withObject "RepeatConf" $ \v ->
@@ -22,7 +30,11 @@ instance FromJSON RepeatConf where
       <$> v .:? "message" .!= "Set repeat count"
       <*> v .:? "default_count" .!= 1
 
-data TelegramConf = TelegramConf {apiUrl :: Text, apiKey :: Text} deriving (Eq, Show)
+data TelegramConf = TelegramConf
+  { apiUrl :: Text,
+    apiKey :: Text
+  }
+  deriving (Eq, Show)
 
 instance FromJSON TelegramConf where
   parseJSON = withObject "TelegramConf" $ \v ->
@@ -54,8 +66,18 @@ instance FromJSON Config where
           Nothing -> parseJSON emptyObject
           Just value -> return value
 
+type ConfigReader a = ReaderT Config IO a
+
+runConfigReader :: ConfigReader a -> Config -> IO a
+runConfigReader = runReaderT
+
 configFile :: FilePath
 configFile = "config.yaml"
+
+defaultConfig :: Config
+defaultConfig = case parse parseJSON emptyObject of
+  Success config -> config
+  _ -> error "Fatal error: could not build default configuration"
 
 readConfig :: IO Config
 readConfig = do
@@ -63,5 +85,6 @@ readConfig = do
   case result of
     Right config -> return config
     Left exception -> do
-      print exception
-      return $ fromJust $ parseMaybe  parseJSON  emptyObject
+      warningM rootLoggerName $ displayException exception
+      warningM rootLoggerName "Something seems to be wrong with reading configuration file. Using default configuration."
+      return defaultConfig
