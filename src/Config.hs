@@ -1,6 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Config where
+module Config
+  ( RepeatConf (..),
+    TelegramConf (..),
+    Config (..),
+    ConfigReader,
+    runConfigReader,
+    readConfig,
+  )
+where
 
 import Control.Exception
 import Control.Monad.Reader (ReaderT (runReaderT))

@@ -1,4 +1,15 @@
-module Logging where
+module Logging
+  ( initLogger,
+    debug,
+    info,
+    notice,
+    warning,
+    Logging.error,
+    critical,
+    alert,
+    emergency,
+  )
+where
 
 import Config (Config (logLevel), ConfigReader)
 import Control.Monad.Reader
@@ -18,11 +29,19 @@ import System.Log.Handler (setFormatter)
 import System.Log.Handler.Simple (GenericHandler, streamHandler)
 import System.Log.Handler.Syslog ()
 import System.Log.Logger
-  (alertM, criticalM, emergencyM, noticeM, errorM, warningM, infoM, debugM,  Priority (ERROR),
+  ( Priority (ERROR),
+    alertM,
+    criticalM,
+    debugM,
+    emergencyM,
+    errorM,
+    infoM,
+    noticeM,
     rootLoggerName,
     setHandlers,
     setLevel,
     updateGlobalLogger,
+    warningM,
   )
 
 logFormatter :: LogFormatter a
@@ -42,7 +61,7 @@ initLogger = do
   liftIO
     . updateGlobalLogger rootLoggerName
     $ setLevel prioriry
-          . setHandlers [infoHandler, errorHandler]
+      . setHandlers [infoHandler, errorHandler]
 
 debug :: String -> IO ()
 debug = debugM rootLoggerName
