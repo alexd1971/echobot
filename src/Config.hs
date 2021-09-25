@@ -10,7 +10,7 @@ module Config
   )
 where
 
-import Control.Exception
+import Control.Exception (Exception (displayException))
 import Control.Monad.Reader (ReaderT (runReaderT))
 import Data.Aeson
   ( FromJSON (parseJSON),
@@ -21,10 +21,9 @@ import Data.Aeson
     (.:?),
   )
 import Data.Aeson.Types (emptyObject, parse, parseMaybe)
-import Data.Maybe
 import Data.Text (Text)
 import Data.Yaml (decodeFileEither)
-import System.Log.Logger
+import System.Log.Logger (rootLoggerName, warningM)
 
 data RepeatConf = RepeatConf
   { message :: Text,

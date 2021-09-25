@@ -27,7 +27,6 @@ import System.IO
 import System.Log.Formatter (LogFormatter, simpleLogFormatter)
 import System.Log.Handler (setFormatter)
 import System.Log.Handler.Simple (GenericHandler, streamHandler)
-import System.Log.Handler.Syslog ()
 import System.Log.Logger
   ( Priority (ERROR),
     alertM,

@@ -24,9 +24,10 @@ dependencies:
 - aeson
 - base >= 4.7 && < 5
 - generic-random
-- hslogger
+- hslogg
 - hspec
 - mtl
+- req
 - text
 - unordered-containers
 - yaml
