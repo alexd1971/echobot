@@ -11,7 +11,7 @@ module Logging
   )
 where
 
-import Config (Config (logLevel), ConfigReader)
+import BotEnv
 import Control.Monad.Reader
   ( MonadIO (liftIO),
     MonadReader (ask),
@@ -42,6 +42,7 @@ import System.Log.Logger
     updateGlobalLogger,
     warningM,
   )
+import Config (Config(logLevel))
 
 logFormatter :: LogFormatter a
 logFormatter = simpleLogFormatter "$time - [$prio] - $msg"
@@ -49,7 +50,7 @@ logFormatter = simpleLogFormatter "$time - [$prio] - $msg"
 mkGenericHandler :: Handle -> Priority -> IO (GenericHandler Handle)
 mkGenericHandler handle priority = flip setFormatter logFormatter <$> streamHandler handle priority
 
-initLogger :: ConfigReader ()
+initLogger :: BotEnv ()
 initLogger = do
   config <- ask
   let prioriry = read . map toUpper $ logLevel config :: Priority

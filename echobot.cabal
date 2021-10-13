@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.3.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 
@@ -25,52 +25,14 @@ source-repository head
 
 library
   exposed-modules:
+      Bot
+      BotEnv
       Config
+      DSL.BotLang
+      Interpreter.Telegram
+      JSONParsers
       Logging
-      Telegram.Types.Animation
-      Telegram.Types.Audio
-      Telegram.Types.CallbackQuery
-      Telegram.Types.ChatInviteLink
-      Telegram.Types.ChatLocation
-      Telegram.Types.ChatMember
-      Telegram.Types.ChatMemberUpdated
-      Telegram.Types.ChatMessage
-      Telegram.Types.ChatPermissions
-      Telegram.Types.ChosenInlineResult
-      Telegram.Types.Contact
-      Telegram.Types.Dice
-      Telegram.Types.Document
-      Telegram.Types.EncryptedCredentials
-      Telegram.Types.EncryptedPassportElement
-      Telegram.Types.Game
-      Telegram.Types.InlineKeyboardButton
-      Telegram.Types.InlineKeyboardMarkup
-      Telegram.Types.InlineQuery
-      Telegram.Types.Invoice
-      Telegram.Types.Location
-      Telegram.Types.LoginUrl
-      Telegram.Types.MaskPosition
-      Telegram.Types.MessageAutoDeleteTimerChanged
-      Telegram.Types.MessageEntity
-      Telegram.Types.OrderInfo
-      Telegram.Types.PassportData
-      Telegram.Types.PassportFile
-      Telegram.Types.PhotoSize
-      Telegram.Types.Poll
-      Telegram.Types.PollAnswer
-      Telegram.Types.PollOption
-      Telegram.Types.PreCheckoutQuery
-      Telegram.Types.ProximityAlertTriggered
-      Telegram.Types.ShippingAddress
-      Telegram.Types.ShippingQuery
-      Telegram.Types.Sticker
-      Telegram.Types.SuccessfulPayment
-      Telegram.Types.Update
-      Telegram.Types.User
-      Telegram.Types.Venue
-      Telegram.Types.Video
-      Telegram.Types.VideoNote
-      Telegram.Types.Voice
+      UserPrefs
   other-modules:
       Paths_echobot
   hs-source-dirs:
@@ -79,9 +41,10 @@ library
       QuickCheck
     , aeson
     , base >=4.7 && <5
-    , generic-random
-    , hslogg
-    , hspec
+    , directory
+    , filepath
+    , free
+    , hslogger
     , mtl
     , req
     , text
@@ -100,10 +63,11 @@ executable echobot-exe
       QuickCheck
     , aeson
     , base >=4.7 && <5
+    , directory
     , echobot
-    , generic-random
-    , hslogg
-    , hspec
+    , filepath
+    , free
+    , hslogger
     , mtl
     , req
     , text
@@ -123,77 +87,12 @@ test-suite config
       QuickCheck
     , aeson
     , base >=4.7 && <5
+    , directory
     , echobot
+    , filepath
+    , free
     , generic-random
-    , hslogg
-    , hspec
-    , mtl
-    , req
-    , text
-    , unordered-containers
-    , yaml
-  default-language: Haskell2010
-
-test-suite types
-  type: exitcode-stdio-1.0
-  main-is: TypesTest.hs
-  other-modules:
-      Test.Telegram.Types.Animation
-      Test.Telegram.Types.Audio
-      Test.Telegram.Types.CallbackQuery
-      Test.Telegram.Types.ChatInviteLink
-      Test.Telegram.Types.ChatLocation
-      Test.Telegram.Types.ChatMember
-      Test.Telegram.Types.ChatMemberUpdated
-      Test.Telegram.Types.ChatMessage
-      Test.Telegram.Types.ChatPermissions
-      Test.Telegram.Types.ChosenInlineResult
-      Test.Telegram.Types.Contact
-      Test.Telegram.Types.Dice
-      Test.Telegram.Types.Document
-      Test.Telegram.Types.EncryptedCredentials
-      Test.Telegram.Types.EncryptedPassportElement
-      Test.Telegram.Types.Game
-      Test.Telegram.Types.General
-      Test.Telegram.Types.InlineKeyboardButton
-      Test.Telegram.Types.InlineKeyboardMarkup
-      Test.Telegram.Types.InlineQuery
-      Test.Telegram.Types.Invoice
-      Test.Telegram.Types.Location
-      Test.Telegram.Types.LoginUrl
-      Test.Telegram.Types.MaskPosition
-      Test.Telegram.Types.MessageAutoDeleteTimerChanged
-      Test.Telegram.Types.MessageEntity
-      Test.Telegram.Types.OrderInfo
-      Test.Telegram.Types.PassportData
-      Test.Telegram.Types.PassportFile
-      Test.Telegram.Types.PhotoSize
-      Test.Telegram.Types.Poll
-      Test.Telegram.Types.PollAnswer
-      Test.Telegram.Types.PollOption
-      Test.Telegram.Types.PreCheckoutQuery
-      Test.Telegram.Types.ProximityAlertTriggered
-      Test.Telegram.Types.ShippingAddress
-      Test.Telegram.Types.ShippingQuery
-      Test.Telegram.Types.Sticker
-      Test.Telegram.Types.SuccessfulPayment
-      Test.Telegram.Types.Update
-      Test.Telegram.Types.User
-      Test.Telegram.Types.Venue
-      Test.Telegram.Types.Video
-      Test.Telegram.Types.VideoNote
-      Test.Telegram.Types.Voice
-      Paths_echobot
-  hs-source-dirs:
-      test/types
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      QuickCheck
-    , aeson
-    , base >=4.7 && <5
-    , echobot
-    , generic-random
-    , hslogg
+    , hslogger
     , hspec
     , mtl
     , req
