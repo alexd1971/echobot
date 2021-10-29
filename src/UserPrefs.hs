@@ -1,6 +1,6 @@
 module UserPrefs where
 
-import BotEnv (UserPrefs)
+import BotApp (UserPrefs)
 import Config (Config)
 import qualified Config as C
 import Control.Monad.Reader (ReaderT, asks, liftIO)

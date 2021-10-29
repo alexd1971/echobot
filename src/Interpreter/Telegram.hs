@@ -1,17 +1,16 @@
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeSynonymInstances #-}
 
 module Interpreter.Telegram
   ( runBotScript
   ) where
 
-import BotEnv (BotEnv, BotState(BotState))
-import qualified BotEnv as Env
+import BotApp (BotApp, BotState(BotState))
+import qualified BotApp as AppState (offset, prefs)
 import qualified Config as C
 import Control.Applicative ((<|>))
 import Control.Monad (replicateM, unless, when)
+import Control.Monad.Catch
 import Control.Monad.Reader (asks, lift, liftIO)
 import Control.Monad.State (gets, modify, put)
 import DSL.BotLang (BotScript, Interpreter(..), Update(..), interpret)
@@ -50,14 +49,15 @@ import Network.HTTP.Req
 import System.FilePath ((</>))
 import Text.Read (readMaybe)
 
-instance MonadHttp BotEnv where
-  handleHttpException = liftIO . throwIO
+instance MonadHttp BotApp where
+  handleHttpException = throwM
 
-instance Interpreter BotEnv where
+instance Interpreter BotApp where
   onGetUpdates = do
+    liftIO $ putStrLn "Get updates:"
     telegramApi <- getTelegramApi
     timeout <- asks (C.pollTimeout . C.telegram)
-    offset <- lift $ gets Env.offset
+    offset <- gets AppState.offset
     body <-
       responseBody <$>
       req
@@ -70,9 +70,10 @@ instance Interpreter BotEnv where
     unless (null updates) $ do
       let updateId =
             fromMaybe 0 (parseMaybe getUpdateId (value . last $ updates))
-      when (updateId > 0) (lift $ modify $ updateOffset updateId)
+      when (updateId > 0) (modify $ updateOffset updateId)
     return updates
   onExecuteCommand (Command v) = do
+    liftIO $ putStrLn "Execute command:"
     let command = fromMaybe "" (parseMaybe getMessageText v)
         chatId = fromMaybe 0 (parseMaybe getChatId v)
     when (command /= "" && chatId /= 0) $ do
@@ -82,11 +83,12 @@ instance Interpreter BotEnv where
         _ -> unknownCommand chatId
   onExecuteCommand _ = return ()
   onEchoMessage (Message v) = do
+    liftIO $ putStrLn "Echo message:"
     let chatId = fromMaybe 0 (parseMaybe getChatId v)
         messageId = fromMaybe 0 (parseMaybe getMessageId v)
         userId = fromMaybe 0 (parseMaybe getUserId v)
     when (chatId /= 0 && messageId /= 0 && userId /= 0) $ do
-      prefs <- gets Env.prefs
+      prefs <- gets AppState.prefs
       defaultCount <- asks (C.defaultCount . C.repeat)
       let count = fromJust $ HM.lookup userId prefs <|> pure defaultCount
           reqBody =
@@ -105,19 +107,20 @@ instance Interpreter BotEnv where
              (telegramApi /: "copyMessage")
              (ReqBodyJson reqBody)
              jsonResponse
-             mempty :: BotEnv Value)
+             mempty :: BotApp Value)
       return ()
   onEchoMessage _ = return ()
   onSetUserPreferences (CallBackData v) = do
+    liftIO $ putStrLn "Setup user preferences:"
     let count = fromMaybe 0 $ parseMaybe getCallBackData v >>= readMaybe
         userId = fromMaybe 0 (parseMaybe getUserId v)
     when (count /= 0 && userId /= 0) $ do
-      lift $ modify $ setUserPref userId count
+      modify $ setUserPref userId count
       prefDir <- asks C.userPrefsDir
       liftIO $ writeFile (prefDir </> show userId) (show count)
   onSetUserPreferences _ = return ()
 
-runBotScript :: BotScript a -> BotEnv a
+runBotScript :: BotScript a -> BotApp a
 runBotScript = interpret
 
 updateOffset :: Int -> BotState -> BotState
@@ -125,16 +128,17 @@ updateOffset updateId (BotState _ prefs) = BotState (updateId + 1) prefs
 
 setUserPref :: Int -> Int -> BotState -> BotState
 setUserPref userId count botState =
-  let prefs = Env.prefs botState
-   in botState {Env.prefs = HM.insert userId count prefs}
+  let prefs = AppState.prefs botState
+   in botState {AppState.prefs = HM.insert userId count prefs}
 
-getTelegramApi :: BotEnv (Url 'Https)
+getTelegramApi :: BotApp (Url 'Https)
 getTelegramApi = do
   apiKey <- asks (C.apiKey . C.telegram)
   return $ https "api.telegram.org" /: ("bot" <> apiKey)
 
-showHelp :: Int -> BotEnv ()
+showHelp :: Int -> BotApp ()
 showHelp chatId = do
+  liftIO $ putStrLn "Show help"
   telegramApi <- getTelegramApi
   text <- asks C.helpMessage
   let message = object ["chat_id" .= chatId, "text" .= text]
@@ -146,8 +150,9 @@ showHelp chatId = do
     mempty
   return ()
 
-showRepeat :: Int -> BotEnv ()
+showRepeat :: Int -> BotApp ()
 showRepeat chatId = do
+  liftIO $ putStrLn "Show repeat"
   text <- asks (C.message . C.repeat)
   telegramApi <- getTelegramApi
   let message =
@@ -190,8 +195,9 @@ showRepeat chatId = do
     mempty
   return ()
 
-unknownCommand :: Int -> BotEnv ()
+unknownCommand :: Int -> BotApp ()
 unknownCommand chatId = do
+  liftIO $ putStrLn "Show unknown command"
   telegramApi <- getTelegramApi
   let message =
         object ["chat_id" .= chatId, "text" .= ("Unknown command" :: Text)]

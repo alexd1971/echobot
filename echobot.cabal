@@ -26,12 +26,11 @@ source-repository head
 library
   exposed-modules:
       Bot
-      BotEnv
+      BotApp
       Config
       DSL.BotLang
       Interpreter.Telegram
       JSONParsers
-      Logging
       UserPrefs
   other-modules:
       Paths_echobot
@@ -42,6 +41,7 @@ library
     , aeson
     , base >=4.7 && <5
     , directory
+    , exceptions
     , filepath
     , free
     , hslogger
@@ -65,6 +65,7 @@ executable echobot-exe
     , base >=4.7 && <5
     , directory
     , echobot
+    , exceptions
     , filepath
     , free
     , hslogger
@@ -89,6 +90,7 @@ test-suite config
     , base >=4.7 && <5
     , directory
     , echobot
+    , exceptions
     , filepath
     , free
     , generic-random
