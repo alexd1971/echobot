@@ -44,7 +44,7 @@ library
     , exceptions
     , filepath
     , free
-    , hslogger
+    , monad-logger
     , mtl
     , req
     , text
@@ -68,7 +68,7 @@ executable echobot-exe
     , exceptions
     , filepath
     , free
-    , hslogger
+    , monad-logger
     , mtl
     , req
     , text
@@ -94,8 +94,8 @@ test-suite config
     , filepath
     , free
     , generic-random
-    , hslogger
     , hspec
+    , monad-logger
     , mtl
     , req
     , text

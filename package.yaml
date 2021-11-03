@@ -27,7 +27,7 @@ dependencies:
 - exceptions
 - filepath
 - free
-- hslogger
+- monad-logger
 - mtl
 - req
 - text

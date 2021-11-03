@@ -19,8 +19,8 @@ import Data.Aeson
 import Data.Aeson.Types (emptyObject, parse, parseMaybe)
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
-import Data.Yaml (decodeFileEither)
-import System.Log.Logger (rootLoggerName, warningM)
+import Data.Yaml (decodeFileEither, decodeFileThrow)
+import System.Directory (doesFileExist)
 
 data Config =
   Config
@@ -50,7 +50,7 @@ instance FromJSON Config where
   parseJSON =
     withObject "Config" $ \obj ->
       Config <$> obj .:? "help_message" .!= "Echo Bot" <*>
-      obj .:? "user_prefs_dir" .!= "~/.chache/echobot" <*>
+      obj .:? "user_prefs_dir" .!= "~/.cache/echobot" <*>
       obj .: "repeat" <*>
       obj .:? "log_level" .!= "info" <*>
       obj .: "telegram"
@@ -77,12 +77,7 @@ defaultConfig =
 
 readConfig :: IO Config
 readConfig = do
-  result <- decodeFileEither configFile
-  case result of
-    Right config -> return config
-    Left exception -> do
-      warningM rootLoggerName $ displayException exception
-      warningM
-        rootLoggerName
-        "Something seems to be wrong with reading configuration file. Using default configuration."
-      return defaultConfig
+  configFileExists <- doesFileExist configFile
+  if configFileExists
+    then decodeFileThrow configFile
+    else return defaultConfig
