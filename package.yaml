@@ -23,6 +23,7 @@ dependencies:
 - QuickCheck
 - aeson
 - base >= 4.7 && < 5
+- bytestring
 - directory
 - exceptions
 - filepath
@@ -31,6 +32,7 @@ dependencies:
 - mtl
 - req
 - text
+- time
 - unordered-containers
 - yaml
 

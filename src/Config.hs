@@ -8,6 +8,9 @@ module Config
   ) where
 
 import Control.Exception (Exception(displayException))
+import Control.Monad.Logger
+  ( LogLevel(LevelDebug, LevelError, LevelInfo, LevelWarn)
+  )
 import Data.Aeson
   ( FromJSON(parseJSON)
   , Result(Success)
@@ -16,9 +19,9 @@ import Data.Aeson
   , (.:?)
   , withObject
   )
-import Data.Aeson.Types (emptyObject, parse, parseMaybe)
+import Data.Aeson.Types (emptyObject, parse, parseMaybe, withText)
 import Data.Maybe (fromMaybe)
-import Data.Text (Text)
+import Data.Text (Text, toLower)
 import Data.Yaml (decodeFileEither, decodeFileThrow)
 import System.Directory (doesFileExist)
 
@@ -27,7 +30,7 @@ data Config =
     { helpMessage :: Text
     , userPrefsDir :: FilePath
     , repeat :: RepeatConf
-    , logLevel :: String
+    , logLevel :: LogLevel
     , telegram :: TelegramConf
     }
   deriving (Eq, Show)
@@ -46,13 +49,23 @@ data TelegramConf =
     }
   deriving (Eq, Show)
 
+instance FromJSON LogLevel where
+  parseJSON =
+    withText "Log Level" $ \v ->
+      case toLower v of
+        "debug" -> pure LevelDebug
+        "info" -> pure LevelInfo
+        "warn" -> pure LevelWarn
+        "error" -> pure LevelError
+        _ -> fail "Unknown Log Level"
+
 instance FromJSON Config where
   parseJSON =
     withObject "Config" $ \obj ->
       Config <$> obj .:? "help_message" .!= "Echo Bot" <*>
       obj .:? "user_prefs_dir" .!= "~/.cache/echobot" <*>
       obj .: "repeat" <*>
-      obj .:? "log_level" .!= "info" <*>
+      obj .:? "log_level" .!= LevelInfo <*>
       obj .: "telegram"
 
 instance FromJSON RepeatConf where

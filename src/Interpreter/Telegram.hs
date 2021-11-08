@@ -11,6 +11,7 @@ import qualified Config as C
 import Control.Applicative ((<|>))
 import Control.Monad (replicateM, unless, when)
 import Control.Monad.Catch
+import Control.Monad.Logger (logInfoN)
 import Control.Monad.Reader (asks, lift, liftIO)
 import Control.Monad.State (gets, modify, put)
 import DSL.BotLang (BotScript, Interpreter(..), Update(..), interpret)
@@ -26,6 +27,7 @@ import Data.Aeson
 import Data.Aeson.Types (Parser, parseMaybe)
 import qualified Data.HashMap.Lazy as HM
 import Data.Maybe (fromJust, fromMaybe)
+import Data.Text (pack)
 import Data.Text.Lazy (Text)
 import qualified Data.Text.Lazy as T
 import GHC.IO (throwIO)
@@ -54,7 +56,7 @@ instance MonadHttp BotApp where
 
 instance Interpreter BotApp where
   onGetUpdates = do
-    liftIO $ putStrLn "Get updates:"
+    logInfoN "Get updates."
     telegramApi <- getTelegramApi
     timeout <- asks (C.pollTimeout . C.telegram)
     offset <- gets AppState.offset
@@ -71,23 +73,26 @@ instance Interpreter BotApp where
       let updateId =
             fromMaybe 0 (parseMaybe getUpdateId (value . last $ updates))
       when (updateId > 0) (modify $ updateOffset updateId)
+    when (null updates) (logInfoN "Timed out.")
     return updates
   onExecuteCommand (Command v) = do
-    liftIO $ putStrLn "Execute command:"
     let command = fromMaybe "" (parseMaybe getMessageText v)
         chatId = fromMaybe 0 (parseMaybe getChatId v)
     when (command /= "" && chatId /= 0) $ do
+      logInfoN $ "Received command: " <> command
       case command of
         "/help" -> showHelp chatId
         "/repeat" -> showRepeat chatId
         _ -> unknownCommand chatId
   onExecuteCommand _ = return ()
   onEchoMessage (Message v) = do
-    liftIO $ putStrLn "Echo message:"
     let chatId = fromMaybe 0 (parseMaybe getChatId v)
         messageId = fromMaybe 0 (parseMaybe getMessageId v)
         userId = fromMaybe 0 (parseMaybe getUserId v)
     when (chatId /= 0 && messageId /= 0 && userId /= 0) $ do
+      logInfoN $
+        "Received message " <>
+        (pack . show) messageId <> " from user " <> (pack . show) userId
       prefs <- gets AppState.prefs
       defaultCount <- asks (C.defaultCount . C.repeat)
       let count = fromJust $ HM.lookup userId prefs <|> pure defaultCount
@@ -138,7 +143,7 @@ getTelegramApi = do
 
 showHelp :: Int -> BotApp ()
 showHelp chatId = do
-  liftIO $ putStrLn "Show help"
+  logInfoN "Show help."
   telegramApi <- getTelegramApi
   text <- asks C.helpMessage
   let message = object ["chat_id" .= chatId, "text" .= text]
@@ -152,7 +157,7 @@ showHelp chatId = do
 
 showRepeat :: Int -> BotApp ()
 showRepeat chatId = do
-  liftIO $ putStrLn "Show repeat"
+  logInfoN "Show repeat dialog."
   text <- asks (C.message . C.repeat)
   telegramApi <- getTelegramApi
   let message =
