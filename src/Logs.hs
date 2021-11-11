@@ -4,7 +4,7 @@ module Logs where
 
 import Control.Monad.Logger
   ( Loc
-  , LogLevel
+  , LogLevel(LevelDebug)
   , LogSource
   , LogStr
   , ToLogStr(toLogStr)
@@ -21,6 +21,9 @@ logLevelFilter l _ l' = l <= l'
 logOutput :: Loc -> LogSource -> LogLevel -> LogStr -> IO ()
 logOutput loc src level msg = do
   time <- getZonedTime
-  let msg' = (toLogStr . show) time <> " " <> msg
+  let msg' =
+        if level == LevelDebug
+          then msg
+          else (toLogStr . show) time <> " " <> msg
       ls = fromLogStr $ defaultLogStr loc src level msg'
   BS.hPutStr stdout ls

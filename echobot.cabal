@@ -40,6 +40,7 @@ library
   build-depends:
       QuickCheck
     , aeson
+    , aeson-pretty
     , base >=4.7 && <5
     , bytestring
     , directory
@@ -65,6 +66,7 @@ executable echobot-exe
   build-depends:
       QuickCheck
     , aeson
+    , aeson-pretty
     , base >=4.7 && <5
     , bytestring
     , directory
@@ -92,6 +94,7 @@ test-suite config
   build-depends:
       QuickCheck
     , aeson
+    , aeson-pretty
     , base >=4.7 && <5
     , bytestring
     , directory

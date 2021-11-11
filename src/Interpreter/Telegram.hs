@@ -11,7 +11,7 @@ import qualified Config as C
 import Control.Applicative ((<|>))
 import Control.Monad (replicateM, unless, when)
 import Control.Monad.Catch
-import Control.Monad.Logger (logInfoN)
+import Control.Monad.Logger (logDebugN, logInfoN)
 import Control.Monad.Reader (asks, lift, liftIO)
 import Control.Monad.State (gets, modify, put)
 import DSL.BotLang (BotScript, Interpreter(..), Update(..), interpret)
@@ -24,12 +24,14 @@ import Data.Aeson
   , object
   , withObject
   )
+import Data.Aeson.Encode.Pretty (encodePrettyToTextBuilder)
 import Data.Aeson.Types (Parser, parseMaybe)
 import qualified Data.HashMap.Lazy as HM
-import Data.Maybe (fromJust, fromMaybe)
+import Data.Maybe (catMaybes, fromJust, fromMaybe, mapMaybe)
 import Data.Text (pack)
-import Data.Text.Lazy (Text)
+import Data.Text.Lazy (Text, toStrict)
 import qualified Data.Text.Lazy as T
+import Data.Text.Lazy.Builder (toLazyText)
 import GHC.IO (throwIO)
 import JSONParsers
 import Network.HTTP.Req
@@ -46,7 +48,7 @@ import Network.HTTP.Req
   , ignoreResponse
   , jsonResponse
   , req
-  , responseBody
+  , responseBody, renderUrl
   )
 import System.FilePath ((</>))
 import Text.Read (readMaybe)
@@ -54,9 +56,11 @@ import Text.Read (readMaybe)
 instance MonadHttp BotApp where
   handleHttpException = throwM
 
-instance Interpreter BotApp where
+instance Interpreter BotApp
+  -- Gets updates
+                  where
   onGetUpdates = do
-    logInfoN "Get updates."
+    logInfoN "Waiting for updates..."
     telegramApi <- getTelegramApi
     timeout <- asks (C.pollTimeout . C.telegram)
     offset <- gets AppState.offset
@@ -70,21 +74,32 @@ instance Interpreter BotApp where
         ("offset" =: offset <> "timeout" =: timeout)
     let updates = fromMaybe [] (parseMaybe getUpdates body)
     unless (null updates) $ do
-      let updateId =
-            fromMaybe 0 (parseMaybe getUpdateId (value . last $ updates))
-      when (updateId > 0) (modify $ updateOffset updateId)
-    when (null updates) (logInfoN "Timed out.")
+      let updateIds = mapMaybe (parseMaybe getUpdateId . value) updates
+          lastUpdateId = last updateIds
+      logInfoN $ "Got updates: " <> (pack . show $ updateIds)
+      logDebugN $ toStrict . toLazyText . encodePrettyToTextBuilder $ body
+      modify $ updateOffset lastUpdateId
+    when (null updates) $ logInfoN "Timed out."
     return updates
+  -- Executes command
   onExecuteCommand (Command v) = do
+    logInfoN "Executing command..."
+    logDebugN $ toStrict . toLazyText . encodePrettyToTextBuilder $ v
     let command = fromMaybe "" (parseMaybe getMessageText v)
         chatId = fromMaybe 0 (parseMaybe getChatId v)
+        userId = fromMaybe 0 (parseMaybe getUserId v)
     when (command /= "" && chatId /= 0) $ do
-      logInfoN $ "Received command: " <> command
+      logInfoN $
+        "Received command: " <>
+        command <>
+        ", chat Id: " <>
+        (pack . show) chatId <> ", user Id: " <> (pack . show) userId
       case command of
         "/help" -> showHelp chatId
         "/repeat" -> showRepeat chatId
         _ -> unknownCommand chatId
   onExecuteCommand _ = return ()
+  -- Echo Message
   onEchoMessage (Message v) = do
     let chatId = fromMaybe 0 (parseMaybe getChatId v)
         messageId = fromMaybe 0 (parseMaybe getMessageId v)
@@ -143,10 +158,12 @@ getTelegramApi = do
 
 showHelp :: Int -> BotApp ()
 showHelp chatId = do
-  logInfoN "Show help."
+  logInfoN $ "Sending help message to chat " <> (pack . show) chatId <> "."
   telegramApi <- getTelegramApi
   text <- asks C.helpMessage
   let message = object ["chat_id" .= chatId, "text" .= text]
+  logDebugN $ "Telegram api: " <> renderUrl telegramApi
+  logDebugN $ toStrict . toLazyText . encodePrettyToTextBuilder $ message
   req
     POST
     (telegramApi /: "sendMessage")
@@ -157,7 +174,7 @@ showHelp chatId = do
 
 showRepeat :: Int -> BotApp ()
 showRepeat chatId = do
-  logInfoN "Show repeat dialog."
+  logInfoN $ "Showing repeat dialog to chat " <> (pack . show) chatId <> "."
   text <- asks (C.message . C.repeat)
   telegramApi <- getTelegramApi
   let message =
@@ -192,6 +209,8 @@ showRepeat chatId = do
                   ]
               ]
           ]
+  logDebugN $ "Telegram api: " <> renderUrl telegramApi
+  logDebugN $ toStrict . toLazyText . encodePrettyToTextBuilder $ message
   req
     POST
     (telegramApi /: "sendMessage")
